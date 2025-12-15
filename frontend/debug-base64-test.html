@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Base64 изображений</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .test-section {
+            background-color: #2d2d2d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #404040;
+        }
+        .result {
+            background-color: #1a1a1a;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #404040;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .error {
+            background-color: #4a1a1a;
+            border-color: #ff6b6b;
+        }
+        .success {
+            background-color: #1a4a1a;
+            border-color: #4dabf7;
+        }
+        button {
+            background-color: #4dabf7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #3d8bd7;
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .debug-info {
+            background-color: #2a2a2a;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Тест Base64 изображений</h1>
+    
+    <div class="test-section">
+        <h2>📦 Тест получения товаров и изображений</h2>
+        <button onclick="testProductsAndImages()">Тестировать товары и изображения</button>
+        <div id="result" class="result"></div>
+        <div id="image-preview"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001/api';
+        
+        async function apiRequest(url, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE}${url}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                const data = await response.json();
+                return {
+                    success: response.ok,
+                    data: data,
+                    status: response.status,
+                    statusText: response.statusText
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+        
+        async function testProductsAndImages() {
+            const resultDiv = document.getElementById('result');
+            const previewDiv = document.getElementById('image-preview');
+            
+            resultDiv.textContent = 'Загружаем товары...';
+            resultDiv.className = 'result';
+            previewDiv.innerHTML = '';
+            
+            try {
+                // Получаем товары
+                const productsResult = await apiRequest('/products');
+                if (!productsResult.success) {
+                    resultDiv.textContent = `❌ Ошибка загрузки товаров:\n${JSON.stringify(productsResult, null, 2)}`;
+                    resultDiv.className = 'result error';
+                    return;
+                }
+                
+                const products = productsResult.data;
+                resultDiv.textContent = `✅ Товары загружены (${products.length} шт.)\n\n`;
+                
+                // Тестируем изображения для каждого товара
+                for (let i = 0; i < Math.min(products.length, 3); i++) {
+                    const product = products[i];
+                    resultDiv.textContent += `\n🔄 Тестируем товар ${product.id} (${product.name})...\n`;
+                    
+                    const imagesResult = await apiRequest(`/images/product/${product.id}`);
+                    if (imagesResult.success && imagesResult.data.length > 0) {
+                        const images = imagesResult.data;
+                        resultDiv.textContent += `✅ Изображения найдены (${images.length} шт.)\n`;
+                        
+                        // Анализируем каждое изображение
+                        images.forEach((image, index) => {
+                            resultDiv.textContent += `\n📸 Изображение ${index + 1}:\n`;
+                            resultDiv.textContent += `  - ID: ${image.id}\n`;
+                            resultDiv.textContent += `  - Тип: ${image.type || 'не указан'}\n`;
+                            resultDiv.textContent += `  - URL: ${image.url || 'не указан'}\n`;
+                            resultDiv.textContent += `  - Data: ${image.data ? `есть (${image.data.length} символов)` : 'нет'}\n`;
+                            resultDiv.textContent += `  - Alt: ${image.alt || 'не указан'}\n`;
+                            
+                            // Пытаемся отобразить изображение
+                            const img = document.createElement('img');
+                            img.className = 'image-preview';
+                            img.style.margin = '5px';
+                            
+                            let imageSrc = '';
+                            if (image.data) {
+                                // Base64 изображение
+                                const mimeType = image.type || 'image/jpeg';
+                                imageSrc = `data:${mimeType};base64,${image.data}`;
+                                img.alt = `Товар ${product.id} - Изображение ${index + 1} (Base64)`;
+                                
+                                resultDiv.textContent += `  - Сформированный src: data:${mimeType};base64,${image.data.substring(0, 50)}...\n`;
+                            } else if (image.url) {
+                                // URL изображения
+                                imageSrc = image.url;
+                                img.alt = `Товар ${product.id} - Изображение ${index + 1} (URL)`;
+                                
+                                resultDiv.textContent += `  - Сформированный src: ${image.url}\n`;
+                            } else {
+                                resultDiv.textContent += `  - ❌ Нет данных для отображения\n`;
+                                continue;
+                            }
+                            
+                            img.src = imageSrc;
+                            
+                            // Добавляем обработчики событий
+                            img.onload = () => {
+                                resultDiv.textContent += `  - ✅ Изображение загружено успешно\n`;
+                                resultDiv.className = 'result success';
+                            };
+                            
+                            img.onerror = (e) => {
+                                resultDiv.textContent += `  - ❌ Ошибка загрузки изображения: ${e.type}\n`;
+                                resultDiv.className = 'result error';
+                            };
+                            
+                            previewDiv.appendChild(img);
+                        });
+                    } else {
+                        resultDiv.textContent += `❌ Изображения не найдены\n`;
+                    }
+                }
+                
+            } catch (error) {
+                resultDiv.textContent = `❌ Ошибка: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        // Автоматически запускаем тест при загрузке страницы
+        window.onload = function() {
+            testProductsAndImages();
+        };
+    </script>
+</body>
+</html>

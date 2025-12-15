@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отладка корзины</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .debug-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            background-color: #2d2d2d;
+        }
+        button {
+            background-color: #4dabf7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #339af0;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #51cf66;
+        }
+        pre {
+            background-color: #1a1a1a;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Отладка корзины</h1>
+    
+    <div class="debug-section">
+        <h2>1. Проверка localStorage</h2>
+        <button onclick="checkLocalStorage()">Проверить localStorage</button>
+        <div id="localStorage-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2>2. Проверка структуры данных корзины</h2>
+        <button onclick="checkCartStructure()">Проверить структуру</button>
+        <div id="structure-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2>3. Тест добавления товара</h2>
+        <button onclick="testAddProduct()">Добавить тестовый товар</button>
+        <div id="add-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2>4. Проверка корзины</h2>
+        <button onclick="checkCart()">Проверить корзину</button>
+        <div id="cart-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2>5. Очистка корзины</h2>
+        <button onclick="clearCart()" style="background-color: #dc3545;">Очистить корзину</button>
+        <div id="clear-debug"></div>
+    </div>
+
+    <script>
+        function checkLocalStorage() {
+            const result = document.getElementById('localStorage-debug');
+            try {
+                // Проверяем доступность localStorage
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                
+                // Проверяем существующую корзину
+                const cart = localStorage.getItem('cart');
+                
+                result.innerHTML = `
+                    <div class="success">✅ localStorage работает</div>
+                    <div>Корзина в localStorage: ${cart ? 'есть' : 'нет'}</div>
+                    <pre>${cart || 'null'}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ localStorage не работает: ${error.message}</div>`;
+            }
+        }
+
+        function checkCartStructure() {
+            const result = document.getElementById('structure-debug');
+            try {
+                const testProduct = {
+                    id: 1,
+                    name: "Тестовый товар",
+                    description: "Описание",
+                    price: 1000,
+                    categoryId: 1
+                };
+
+                const testCartItem = {
+                    id: '1-1234567890',
+                    product: testProduct,
+                    quantity: 1,
+                    addedAt: new Date()
+                };
+
+                const testCart = {
+                    items: [testCartItem],
+                    totalItems: 1,
+                    totalPrice: 1000
+                };
+
+                result.innerHTML = `
+                    <div class="success">✅ Структура данных корректна</div>
+                    <pre>${JSON.stringify(testCart, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ Ошибка структуры: ${error.message}</div>`;
+            }
+        }
+
+        function testAddProduct() {
+            const result = document.getElementById('add-debug');
+            try {
+                const testProduct = {
+                    id: 1,
+                    name: "Тестовый товар",
+                    description: "Описание тестового товара",
+                    price: 1000,
+                    categoryId: 1
+                };
+
+                // Получаем существующую корзину
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                
+                // Проверяем, есть ли уже такой товар
+                const existingIndex = cart.findIndex(item => item.product.id === testProduct.id);
+                
+                if (existingIndex !== -1) {
+                    cart[existingIndex].quantity += 1;
+                } else {
+                    const newItem = {
+                        id: `${testProduct.id}-${Date.now()}`,
+                        product: testProduct,
+                        quantity: 1,
+                        addedAt: new Date()
+                    };
+                    cart.push(newItem);
+                }
+                
+                // Сохраняем в localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                result.innerHTML = `
+                    <div class="success">✅ Товар добавлен в корзину</div>
+                    <pre>${JSON.stringify(cart, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ Ошибка добавления: ${error.message}</div>`;
+            }
+        }
+
+        function checkCart() {
+            const result = document.getElementById('cart-debug');
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                const totalPrice = cart.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+                
+                result.innerHTML = `
+                    <div class="success">✅ Корзина загружена</div>
+                    <div>Товаров: ${totalItems}</div>
+                    <div>Стоимость: ${totalPrice.toLocaleString('ru-RU')} ₽</div>
+                    <div>Элементов: ${cart.length}</div>
+                    <pre>${JSON.stringify(cart, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ Ошибка загрузки корзины: ${error.message}</div>`;
+            }
+        }
+
+        function clearCart() {
+            const result = document.getElementById('clear-debug');
+            try {
+                localStorage.removeItem('cart');
+                result.innerHTML = '<div class="success">✅ Корзина очищена</div>';
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ Ошибка очистки: ${error.message}</div>`;
+            }
+        }
+
+        // Автоматически проверяем localStorage при загрузке
+        window.onload = function() {
+            checkLocalStorage();
+            checkCartStructure();
+        };
+    </script>
+</body>
+</html>

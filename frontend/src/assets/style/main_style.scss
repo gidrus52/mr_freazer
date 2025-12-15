@@ -1,0 +1,26 @@
+
+.main_background_block {
+  height: 33vh;
+  background: url('../img/background/back_01.jpg') no-repeat -800px -1800px !important;
+  color: #888888;
+}
+
+.main_block {
+  //height: max-content;
+  align-items: center;
+  align-content: center
+}
+
+.inner_block {
+  align-items: center;
+  align-content: center;
+
+}
+
+.name_inner_block {
+  font-size: 3.5rem;
+}
+
+.inner_block__item_left {
+  //text-align: left;  align-items: center;
+}

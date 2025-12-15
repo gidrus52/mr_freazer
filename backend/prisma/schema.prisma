@@ -1,0 +1,209 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String?   
+  provider  Provider?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  roles     Role[]    @default([USER])
+  Token     Token[]
+  isBlocked Boolean   @default(false) @map("is_blocked")
+  
+  // Связи с объявлениями и сообщениями
+  advertisements Advertisement[] @relation("UserAdvertisements")
+  sentMessages   Message[]      @relation("UserSentMessages")
+  receivedMessages Message[]    @relation("UserReceivedMessages")
+  
+  // Связи с заказами
+  orders         Order[]        @relation("UserOrders")
+
+  @@map("users")
+}
+
+model Token {
+  token     String   @unique
+  exp       DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  userAgent String   @map("user_agent")
+
+  @@map("tokens")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Provider {
+  GOOGLE
+  YANDEX
+}
+
+enum OrderStatus {
+  PENDING      // Ожидает выполнения
+  IN_PROGRESS  // Выполняется
+  COMPLETED    // Выполнен
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  isActive    Boolean    @default(true) @map("is_active")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  
+  // Иерархия категорий
+  parentId    String?    @map("parent_id")
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryHierarchy")
+  
+  products        Product[]         @relation("CategoryProducts")
+  advertisements  Advertisement[]   @relation("CategoryAdvertisements")
+
+  @@map("categories")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  categoryId  String   @map("category_id")
+  category    Category @relation("CategoryProducts", fields: [categoryId], references: [id], onDelete: Restrict)
+  price       Decimal  @db.Decimal(10, 2)
+  stock       Int      @default(0)
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Связь с изображениями
+  images      Image[]
+  
+  // Связь с позициями заказов
+  orderItems  OrderItem[]
+
+  @@map("products")
+}
+
+model Image {
+  id          String   @id @default(uuid())
+  productId   String   @map("product_id")
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url         String?  // URL изображения
+  data        String?  // Base64 данные изображения
+  type        String?  // Тип изображения (jpeg, png, gif, etc.)
+  alt         String?  // Альтернативный текст для изображения
+  isPrimary   Boolean  @default(false) @map("is_primary") // Основное изображение товара
+  order       Int      @default(0) // Порядок отображения
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("images")
+}
+
+model Advertisement {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  price       Decimal? @db.Decimal(10, 2)
+  location    String?
+  contactInfo String?  @map("contact_info")
+  isActive    Boolean  @default(true) @map("is_active")
+  isPremium   Boolean  @default(false) @map("is_premium")
+  views       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Связи
+  authorId    String   @map("author_id")
+  author      User     @relation("UserAdvertisements", fields: [authorId], references: [id], onDelete: Cascade)
+  categoryId  String?  @map("category_id")
+  category    Category? @relation("CategoryAdvertisements", fields: [categoryId], references: [id], onDelete: SetNull)
+  images      AdvertisementImage[]
+  messages    Message[]
+
+  @@map("advertisements")
+}
+
+model AdvertisementImage {
+  id              String        @id @default(uuid())
+  advertisementId String        @map("advertisement_id")
+  advertisement   Advertisement  @relation(fields: [advertisementId], references: [id], onDelete: Cascade)
+  url             String?       // URL изображения
+  data            String?       // Base64 данные изображения
+  type            String?       // Тип изображения
+  alt             String?       // Альтернативный текст
+  isPrimary       Boolean       @default(false) @map("is_primary")
+  order           Int           @default(0)
+  isActive        Boolean       @default(true) @map("is_active")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  @@map("advertisement_images")
+}
+
+model Message {
+  id              String        @id @default(uuid())
+  content         String
+  isRead          Boolean       @default(false) @map("is_read")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  
+  // Связи
+  senderId        String        @map("sender_id")
+  sender          User          @relation("UserSentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId      String        @map("receiver_id")
+  receiver        User          @relation("UserReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+  advertisementId String?       @map("advertisement_id")
+  advertisement   Advertisement? @relation(fields: [advertisementId], references: [id], onDelete: SetNull)
+  parentMessageId String?       @map("parent_message_id")
+  parentMessage   Message?      @relation("MessageReplies", fields: [parentMessageId], references: [id], onDelete: SetNull)
+  replies         Message[]     @relation("MessageReplies")
+
+  @@map("messages")
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderNumber String      @unique @map("order_number") // Порядковый номер заказа
+  customerId  String      @map("customer_id")
+  customer    User        @relation("UserOrders", fields: [customerId], references: [id], onDelete: Cascade)
+  status      OrderStatus @default(PENDING)
+  description String?     // Необязательное описание заказа
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  completedAt DateTime?   @map("completed_at") // Дата автоматического завершения
+  
+  // Позиции заказа
+  items       OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String   @map("order_id")
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String   @map("product_id")
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  quantity  Int      @default(1)
+  price     Decimal  @db.Decimal(10, 2) // Цена на момент заказа
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("order_items")
+}

@@ -1,0 +1,39 @@
+{
+  "name": "non-avito",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "@vicons/ionicons4": "^0.12.0",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
+    "@vue/babel-preset-jsx": "^1.4.0",
+    "cors": "^2.8.5",
+    "custom-vue-scrollbar": "^0.0.8",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "flag-icons": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2",
+    "pinia": "^2.1.7",
+    "vue": "^3.5.13",
+    "vue-router": "^4.2.5",
+    "vue-window-size": "^2.0.0"
+  },
+  "devDependencies": {
+    "@vicons/material": "^0.12.0",
+    "@vitejs/plugin-vue": "^4.5.0",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "naive-ui": "^2.41.0",
+    "sass": "^1.71.1",
+    "sass-loader": "^14.1.1",
+    "typescript": "^5.8.3",
+    "vite": "^5.0.0",
+    "vue-tsc": "^1.8.22"
+  }
+}

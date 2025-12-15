@@ -1,0 +1,298 @@
+// Переопределение стилей Naive UI для модального окна
+.n-modal .n-card,
+.n-modal .n-card--bordered,
+.n-modal .n-card--shadow,
+.n-modal .n-card--hoverable {
+  max-width: 50vw !important;
+  width: 50% !important;
+  min-width: 300px !important;
+  background-color: #2d2d2d !important;
+  border: 1px solid #404040 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+// Дополнительные селекторы для гарантии применения стилей
+body .n-modal .n-card,
+body .n-modal .n-card--bordered {
+  max-width: 50vw !important;
+  width: 50% !important;
+  min-width: 300px !important;
+}
+
+// Стили для заголовка модального окна
+.n-card__header {
+  background-color: #2d2d2d !important;
+  border-bottom: 1px solid #404040 !important;
+  color: #ffffff !important;
+  
+  .n-card-header__main {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+  }
+}
+
+// Стили для содержимого модального окна
+.n-card__content {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  padding: 30px !important;
+}
+
+// Стили для формы
+.n-form {
+  .n-form-item-label {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+}
+
+// Стили для полей ввода
+.n-input {
+  background-color: #404040 !important;
+  border: 1px solid #555555 !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  
+  &:focus {
+    border-color: #4dabf7 !important;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.1) !important;
+  }
+  
+  &::placeholder {
+    color: #888888 !important;
+  }
+}
+
+// Стили для кнопок
+.n-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  
+  &.n-button--default-type {
+    background-color: transparent !important;
+    border: 1px solid #555555 !important;
+    color: #b0b0b0 !important;
+    
+    &:hover {
+      background-color: #404040 !important;
+      color: #ffffff !important;
+    }
+  }
+  
+  &.n-button--primary-type {
+    background-color: #4dabf7 !important;
+    border: 1px solid #4dabf7 !important;
+    color: #ffffff !important;
+    
+    &:hover {
+      background-color: #339af0 !important;
+      transform: translateY(-2px) !important;
+    }
+    
+    &:disabled {
+      background-color: #666666 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+    }
+  }
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.modal-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal-subtitle {
+  color: #b0b0b0;
+  font-size: 16px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-input {
+  background-color: #404040;
+  border: 1px solid #555555;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.1);
+  }
+
+  &::placeholder {
+    color: #888888;
+  }
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.modal-button {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+
+  &.primary {
+    background-color: #4dabf7;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #339af0;
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      background-color: #666666;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &.secondary {
+    background-color: transparent;
+    color: #b0b0b0;
+    border: 1px solid #555555;
+
+    &:hover {
+      background-color: #404040;
+      color: #ffffff;
+    }
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Адаптивность для модального окна
+@media (max-width: 768px) {
+  .n-modal .n-card,
+  .n-modal .n-card--bordered,
+  body .n-modal .n-card,
+  body .n-modal .n-card--bordered {
+    width: 80% !important;
+    max-width: 80vw !important;
+    min-width: 280px !important;
+  }
+  
+  .n-card__content {
+    padding: 25px !important;
+  }
+  
+  .n-card__header .n-card-header__main {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .n-modal .n-card,
+  .n-modal .n-card--bordered,
+  body .n-modal .n-card,
+  body .n-modal .n-card--bordered {
+    width: 90% !important;
+    max-width: 90vw !important;
+    min-width: 260px !important;
+  }
+  
+  .n-card__content {
+    padding: 20px !important;
+  }
+  
+  .n-card__header .n-card-header__main {
+    font-size: 18px !important;
+  }
+  
+  .n-input {
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+  }
+  
+  .n-button {
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+  }
+}
+
+// Адаптивность для модального окна
+@media (max-width: 768px) {
+  .modal-content {
+    width: 100%;
+    max-width: 100vw;
+    min-width: 280px;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: 100%;
+    max-width: 100vw;
+    min-width: 260px;
+    padding: 20px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-subtitle {
+    font-size: 14px;
+  }
+
+  .form-input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .modal-button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
