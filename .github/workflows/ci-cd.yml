@@ -45,6 +45,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Remove .env files if exist
+        working-directory: ./backend
+        run: |
+          if [ -f .env ]; then
+            echo "⚠️  Found .env file, removing to prevent conflicts"
+            rm -f .env
+          fi
+          if [ -f .env.test ]; then
+            echo "⚠️  Found .env.test file, removing to prevent conflicts"
+            rm -f .env.test
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -55,10 +67,14 @@ jobs:
       - name: Install dependencies
         working-directory: ./backend
         run: npm ci
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
       - name: Generate Prisma Client
         working-directory: ./backend
         run: npx prisma generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
       - name: Wait for PostgreSQL
         run: |
@@ -78,11 +94,20 @@ jobs:
         working-directory: ./backend
         run: |
           echo "DATABASE_URL=$DATABASE_URL"
-          npx prisma db execute --stdin <<< "SELECT 1;" || echo "Connection test completed"
+          echo "Testing connection..."
+          PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -c "SELECT 1;" || echo "Connection test completed"
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
 
       - name: Run database migrations
         working-directory: ./backend
         run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
       - name: Run linter
         working-directory: ./backend
@@ -91,6 +116,11 @@ jobs:
       - name: Run tests
         working-directory: ./backend
         run: npm test
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+          NODE_ENV: test
+          JWT_SECRET: test-secret
+          REFRESH_SECRET: test-refresh-secret
 
   # Frontend tests and linting
   frontend-test:
