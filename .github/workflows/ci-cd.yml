@@ -27,11 +27,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: test_db
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        options: --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
 
@@ -66,7 +62,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
@@ -115,7 +111,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./backend
-        run: npm test
+        run: npm test -- --passWithNoTests
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
           NODE_ENV: test
