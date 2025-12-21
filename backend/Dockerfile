@@ -4,8 +4,8 @@ FROM node:20-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Install Prisma CLI globally (optional, but helpful)
-RUN npm install -g prisma
+# Install Prisma CLI globally (matching package.json version)
+RUN npm install -g prisma@4.16.2
 
 # Copy package files
 COPY package*.json ./
@@ -29,8 +29,8 @@ FROM node:20-alpine
 # Set working directory
 WORKDIR /app
 
-# Install Prisma CLI for migrations
-RUN npm install -g prisma
+# Install Prisma CLI for migrations (matching package.json version)
+RUN npm install -g prisma@4.16.2
 
 # Copy package files
 COPY package*.json ./
