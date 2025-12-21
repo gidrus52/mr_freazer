@@ -35,6 +35,12 @@ jobs:
         ports:
           - 5432:5432
 
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+      NODE_ENV: test
+      JWT_SECRET: test-secret
+      REFRESH_SECRET: test-refresh-secret
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,11 +60,29 @@ jobs:
         working-directory: ./backend
         run: npx prisma generate
 
+      - name: Wait for PostgreSQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client || true
+          export PGHOST=localhost
+          export PGPORT=5432
+          export PGUSER=postgres
+          export PGPASSWORD=postgres
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+          echo "PostgreSQL is ready!"
+
+      - name: Verify database connection
+        working-directory: ./backend
+        run: |
+          echo "DATABASE_URL=$DATABASE_URL"
+          npx prisma db execute --stdin <<< "SELECT 1;" || echo "Connection test completed"
+
       - name: Run database migrations
         working-directory: ./backend
         run: npx prisma migrate deploy
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
       - name: Run linter
         working-directory: ./backend
@@ -67,11 +91,6 @@ jobs:
       - name: Run tests
         working-directory: ./backend
         run: npm test
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
-          NODE_ENV: test
-          JWT_SECRET: test-secret
-          REFRESH_SECRET: test-refresh-secret
 
   # Frontend tests and linting
   frontend-test:

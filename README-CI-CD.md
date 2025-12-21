@@ -74,9 +74,9 @@
 
 1. **Секреты не требуются** для базовой работы (используется `GITHUB_TOKEN`)
 2. Для деплоя настройте секреты:
-   - `SSH_HOST` - адрес сервера
-   - `SSH_USER` - пользователь SSH
-   - `SSH_KEY` - приватный ключ SSH
+   - `SSH_HOST` - адрес сервера - https://github.com/
+   - `SSH_USER` - пользователь SSH - gidrus52
+   - `SSH_KEY` - приватный ключ SSH ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXIPn25CJ656SJrCnt04TQb6+ACu3cGeZ9rCApWyoES3qYBiwQA3xaRAZk9F4BWgeqnI8Wq5Ay8bNCuqueiWDSeUYNjFh8DHJNcL6lEoHjvmrjnTvT77P7cs3U8lh2lbsm1GNkKKpNp8xmX55zIcgkjtngzKOa2BVlVuemfZlPD9fvGxfRsT6bP1orpJP9Ov4lcQubC6nRYX3Er8uuqwfnsysLsvGIy+Tiz2HRZzmWHuC4XJcrBoZj0SPYpnNc0zg6iuGYhaLYAATsZSJbgL1C6CWhTZO+UnV0VIFxDcsXmN+U7tSerbBMYwYEDssklnPc8S3WE1Bke72UmBOdhI4YHz3oBZJeRkHDzCsQ/iIfr/oM8Y1hD13nopsf/jrlfXhF4jld4FUwIzcHNlKmGQKPG5DoNoubO0YBJcxD3Jszy8gmKscd4H7PEK4GXOHN6OjpMp69WB2c6y1UEYmREl56YGLd3X/rLZwtqsoJ9umuqBDECoaLdYQc2+gewgrXZlU= forsalenn@gmail.com
 
 ### GitLab CI
 
