@@ -202,7 +202,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: production
-      url: https://your-domain.com
+      url: http://82.148.6.221
 
     steps:
       - name: Checkout code
