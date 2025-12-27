@@ -6,7 +6,12 @@ WORKDIR /app
 
 # Copy frontend files
 COPY frontend/package*.json ./
-RUN npm ci
+
+# Install dependencies with retry and timeout
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
 COPY frontend/ ./
 RUN npm run build

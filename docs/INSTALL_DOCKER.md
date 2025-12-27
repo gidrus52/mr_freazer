@@ -374,3 +374,4 @@ curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && s
 
 После выполнения команды выйдите и войдите в систему заново, чтобы изменения вступили в силу.
 
+
