@@ -13,7 +13,22 @@ RUN npm config set fetch-retries 5 && \
     npm config set fetch-retry-maxtimeout 120000 && \
     npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
-COPY frontend/ ./
+# Copy only necessary files (exclude large archives and unnecessary files)
+COPY frontend/src ./src
+COPY frontend/public ./public
+COPY frontend/index.html ./
+COPY frontend/package.json ./
+COPY frontend/tsconfig.json ./
+COPY frontend/tsconfig.node.json ./
+COPY frontend/vite.config.ts ./
+COPY frontend/babel.config.js ./
+
+# Exclude large files
+RUN find . -name "*.rar" -delete && \
+    find . -name "*.zip" -delete && \
+    find . -name "*.tar" -delete && \
+    find . -name "*.tar.gz" -delete
+
 RUN npm run build
 
 # Stage 2: Nginx with frontend

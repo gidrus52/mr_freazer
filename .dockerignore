@@ -37,6 +37,20 @@ dist/
 build/
 *.tsbuildinfo
 
+# Large files and archives
+*.rar
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.iso
+*.dmg
+*.img
+**/*.rar
+**/*.zip
+**/*.tar
+**/*.tar.gz
+
 # Environment files
 .env
 .env.local
