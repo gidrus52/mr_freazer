@@ -33,6 +33,7 @@ import youtubeIcon from "../../assets/img/icons/youtubeIcon";
 import { useTranslation } from "../../utils/translations";
 import { countries, defaultCountry, type Country } from "../../utils/countries";
 import { useLanguageStore } from "../../stores/languageStore";
+import { getImageUrl } from "../../utils/imageUtils";
 
 // import dffg  from '../../assets/img/background/back_01.jpg'
 
@@ -119,25 +120,25 @@ const ProductionView = defineComponent({
             // Массивы изображений для каждого блока
             const blockImages = {
                 topBlock: [
-                    "src/assets/img/productionpage/KorpPress/1.png",
-                    "src/assets/img/productionpage/KorpPress/2.png", // Замените на реальные изображения
-                    "src/assets/img/productionpage/KorpPress/3.png", // Замените на реальные изображения
-                    "src/assets/img/productionpage/KorpPress/4.png", // Замените на реальные изображения
-                    "src/assets/img/productionpage/KorpPress/5.png"
+                    getImageUrl("productionpage/KorpPress/1.png"),
+                    getImageUrl("productionpage/KorpPress/2.png"),
+                    getImageUrl("productionpage/KorpPress/3.png"),
+                    getImageUrl("productionpage/KorpPress/4.png"),
+                    getImageUrl("productionpage/KorpPress/5.png")
                 ],
                 nextBlock_1: [
-                    "src/assets/img/productionpage/Rem/1.png",
-                    "src/assets/img/productionpage/Rem/2.png",
-                    "src/assets/img/productionpage/Rem/3.png",
-                    "src/assets/img/productionpage/Rem/4.webp"
+                    getImageUrl("productionpage/Rem/1.png"),
+                    getImageUrl("productionpage/Rem/2.png"),
+                    getImageUrl("productionpage/Rem/3.png"),
+                    getImageUrl("productionpage/Rem/4.webp")
                 ],
                 nextBlock_2: [
-                   "src/assets/img/productionpage/Zvezda/1.png",
-                    "src/assets/img/productionpage/Zvezda/2.png",
+                   getImageUrl("productionpage/Zvezda/1.png"),
+                    getImageUrl("productionpage/Zvezda/2.png"),
                 ],
                 nextBlock_3: [
-                    "src/assets/img/productionpage/Brake/1.png",
-                    "src/assets/img/productionpage/Brake/2.png"
+                    getImageUrl("productionpage/Brake/1.png"),
+                    getImageUrl("productionpage/Brake/2.png")
                 ]
             }
 

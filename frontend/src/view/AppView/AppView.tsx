@@ -18,6 +18,7 @@ import { LocalPhoneRound } from '@vicons/material'
 import { useTranslation } from "../../utils/translations";
 import { useLanguageStore } from "../../stores/languageStore";
 import { countries, defaultCountry, type Country } from "../../utils/countries";
+import { getImageUrl } from "../../utils/imageUtils";
 
 // Типы для EmailJS
 declare global {
@@ -73,15 +74,15 @@ const AppView = defineComponent({
                 const isEnglish = languageStore.currentLanguage === 'en'
                 return {
                     'surron-belts': [
-                        "src/assets/img/apppage/beltkit/2.jpg",
-                        "src/assets/img/apppage/beltkit/1.jpg",
-                        "src/assets/img/apppage/beltkit/3.jpg"
+                        getImageUrl("apppage/beltkit/2.jpg"),
+                        getImageUrl("apppage/beltkit/1.jpg"),
+                        getImageUrl("apppage/beltkit/3.jpg")
                     ],
                     'surron-suspension': [
-                        "src/assets/img/apppage/mayatnik/1.png",
-                        isEnglish ? "src/assets/img/apppage/mayatnik/2_en.png" : "src/assets/img/apppage/mayatnik/2.png",
-                        "src/assets/img/apppage/mayatnik/3.png",
-                        "src/assets/img/apppage/mayatnik/4.png"
+                        getImageUrl("apppage/mayatnik/1.png"),
+                        isEnglish ? getImageUrl("apppage/mayatnik/2_en.png") : getImageUrl("apppage/mayatnik/2.png"),
+                        getImageUrl("apppage/mayatnik/3.png"),
+                        getImageUrl("apppage/mayatnik/4.png")
                     ]
                 }
             })

@@ -29,6 +29,12 @@ RUN find . -name "*.rar" -delete && \
     find . -name "*.tar" -delete && \
     find . -name "*.tar.gz" -delete
 
+# Копируем изображения из src/assets/img в public/img для доступа в production
+RUN mkdir -p public/img && \
+    if [ -d "src/assets/img" ]; then \
+        cp -r src/assets/img/* public/img/ 2>/dev/null || true; \
+    fi
+
 # Увеличиваем лимит памяти для Node.js при сборке (4GB)
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build

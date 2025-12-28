@@ -5,6 +5,7 @@ import {useTemplateRef} from "vue";
 
 import MilingIcon from "../assets/img/icons/milling";
 import backgroundImage from "../assets/img/background/back_01.jpg";
+import { getImageUrl } from "../utils/imageUtils";
 import { useTranslation } from "../utils/translations";
 
 
@@ -27,7 +28,7 @@ const MainPage = defineComponent({
                                 ФРЕЗЕР
                             </NFlex>
                             <NFlex>
-                                <NImage width={300} src={"src/assets/img/icons/777777.png"}/></NFlex>
+                                <NImage width={300} src={getImageUrl("icons/777777.png")}/></NFlex>
                         </NFlex>
                         <NFlex style={'flex-direction: row; flex-wrap: nowrap;'} align={'center'}>
                             <NFlex>
