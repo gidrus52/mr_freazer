@@ -29,6 +29,8 @@ RUN find . -name "*.rar" -delete && \
     find . -name "*.tar" -delete && \
     find . -name "*.tar.gz" -delete
 
+# Увеличиваем лимит памяти для Node.js при сборке (4GB)
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
 # Stage 2: Nginx with frontend
