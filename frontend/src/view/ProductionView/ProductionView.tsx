@@ -578,25 +578,53 @@ Email: forsalenn@gmail.com
                     </NLayout>
                     <NLayout id="nextBlock_1" class="production-block next-block-1">
                         <NFlex class="production-flex">
-                            <NSpace style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
-                                <div style={{textAlign: 'center', color: '#e0e0e0', lineHeight: '1.6'}}>
-                                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4dabf7', marginBottom: '20px'}}>
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <img
+                                    src={this.getCurrentImage('nextBlock_1')}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('production.belt.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')}
+                                />
+                            </NSpace>
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
                                         {this.t('production.belt.title')}
                                     </div>
-                                    <p style={{fontSize: '18px', marginBottom: '30px'}}>{this.t('production.belt.description')}</p>
+                                    <p class="production-description">
+                                        {this.t('production.belt.description')}
+                                    </p>
                                     <NButton 
                                         type="default" 
                                         size="large"
                                         onClick={this.openModal}
+                                        class="contact-button"
                                         style={{
-                                            fontSize: '18px',
-                                            padding: '12px 30px',
-                                            borderRadius: '8px',
-                                            fontWeight: 'bold',
-                                            backgroundColor: '#1a1a1a',
-                                            border: '2px solid #404040',
-                                            color: '#ffffff',
-                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
@@ -608,45 +636,16 @@ Email: forsalenn@gmail.com
                                         </NIcon>
                                         {this.t('production.contactUs')}
                                     </NButton>
-                                            </div>
-                            </NSpace>
-                            <NSpace 
-                                style={{
-                                    width: '600px',
-                                    height: '600px',
-                                    minWidth: '600px',
-                                    maxWidth: '600px',
-                                    minHeight: '600px',
-                                    maxHeight: '600px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    flexShrink: 0
-                                }}
-                                data-image-container="true"
-                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')}
-                            >
-                                <img 
-                                    src={this.getCurrentImage('nextBlock_1')}
-                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')} 
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        maxWidth: '100%',
-                                        maxHeight: '100%',
-                                        objectFit: 'contain',
-                                        display: 'block'
-                                    }}
-                                    alt="Ременные передачи"
-                                />
+                                </div>
                             </NSpace>
                         </NFlex>
                     </NLayout>
-                    <NLayout id="nextBlock_2" style={{background: '#1a1a1a', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-                        <NFlex style={{maxWidth: '1400px', width: '100%', height: '100%', padding: '0 20px', alignItems: 'center'}}>
+                    <NLayout id="nextBlock_2" class="production-block next-block-2">
+                        <NFlex class="production-flex">
                             <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')}
                                 style={{
                                     width: '600px',
                                     height: '600px',
@@ -661,12 +660,9 @@ Email: forsalenn@gmail.com
                                     overflow: 'hidden',
                                     flexShrink: 0
                                 }}
-                                data-image-container="true"
-                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')}
                             >
-                                <img 
+                                <img
                                     src={this.getCurrentImage('nextBlock_2')}
-                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')} 
                                     style={{
                                         width: '100%',
                                         height: '100%',
@@ -676,27 +672,23 @@ Email: forsalenn@gmail.com
                                         display: 'block'
                                     }}
                                     alt={this.t('production.chain.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')}
                                 />
                             </NSpace>
-                            <NSpace style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
-                                <div style={{textAlign: 'center', color: '#e0e0e0', lineHeight: '1.6'}}>
-                                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4dabf7', marginBottom: '20px'}}>
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
                                         {this.t('production.chain.title')}
                                     </div>
-                                    <p style={{fontSize: '18px', marginBottom: '30px', whiteSpace: 'pre-line'}}>{this.t('production.chain.description')}</p>
+                                    <p class="production-description">
+                                        {this.t('production.chain.description')}
+                                    </p>
                                     <NButton 
                                         type="default" 
                                         size="large"
                                         onClick={this.openModal}
+                                        class="contact-button"
                                         style={{
-                                            fontSize: '18px',
-                                            padding: '12px 30px',
-                                            borderRadius: '8px',
-                                            fontWeight: 'bold',
-                                            backgroundColor: '#1a1a1a',
-                                            border: '2px solid #404040',
-                                            color: '#ffffff',
-                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
@@ -712,41 +704,12 @@ Email: forsalenn@gmail.com
                             </NSpace>
                         </NFlex>
                     </NLayout>
-                    <NLayout id="nextBlock_3" style={{background: '#2d2d2d', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-                        <NFlex style={{maxWidth: '1400px', width: '100%', height: '100%', padding: '0 20px', alignItems: 'center'}}>
-                            <NSpace style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
-                                <div style={{textAlign: 'center', color: '#e0e0e0', lineHeight: '1.6'}}>
-                                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4dabf7', marginBottom: '20px'}}>
-                                        {this.t('production.brake.title')}
-                                    </div>
-                                    <p style={{fontSize: '18px', marginBottom: '30px', whiteSpace: 'pre-line'}}>{this.t('production.brake.description')}</p>
-                                    <NButton 
-                                        type="default" 
-                                        size="large"
-                                        onClick={this.openModal}
-                                        style={{
-                                            fontSize: '18px',
-                                            padding: '12px 30px',
-                                            borderRadius: '8px',
-                                            fontWeight: 'bold',
-                                            backgroundColor: '#1a1a1a',
-                                            border: '2px solid #404040',
-                                            color: '#ffffff',
-                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto'
-                                        }}
-                                    >
-                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                            <LocalPhoneRound></LocalPhoneRound>
-                                        </NIcon>
-                                        {this.t('production.contactUs')}
-                                    </NButton>
-                                </div>
-                            </NSpace>
+                    <NLayout id="nextBlock_3" class="production-block next-block-3">
+                        <NFlex class="production-flex">
                             <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')}
                                 style={{
                                     width: '600px',
                                     height: '600px',
@@ -761,12 +724,9 @@ Email: forsalenn@gmail.com
                                     overflow: 'hidden',
                                     flexShrink: 0
                                 }}
-                                data-image-container="true"
-                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')}
                             >
-                                <img 
+                                <img
                                     src={this.getCurrentImage('nextBlock_3')}
-                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')} 
                                     style={{
                                         width: '100%',
                                         height: '100%',
@@ -776,7 +736,35 @@ Email: forsalenn@gmail.com
                                         display: 'block'
                                     }}
                                     alt={this.t('production.brake.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')}
                                 />
+                            </NSpace>
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                        {this.t('production.brake.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.brake.description')}
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
                             </NSpace>
                         </NFlex>
                     </NLayout>

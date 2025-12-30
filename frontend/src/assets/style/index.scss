@@ -1,5 +1,7 @@
 
-@import "./src/assets/style/header/header";
-@import "./src/assets/style/body/advertisement";
-@import "./src/assets/style/main_style";
+@import "./design/index";
+@import "./header/header";
+@import "./body/advertisement";
+@import "./main_style";
 @import "./components/production/production-view";
+@import "./mobile/_index";

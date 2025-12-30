@@ -2,6 +2,11 @@
 .production-layout {
   overflow: hidden;
   height: 100vh;
+  
+  @media (max-width: 768px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 .production-block {
@@ -26,6 +31,14 @@
   &.next-block-3 {
     background: #2d2d2d;
   }
+  
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 100vh;
+    padding: 15px;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 .production-flex {
@@ -34,6 +47,15 @@
   height: 100%;
   padding: 0 20px;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 15px;
+    max-width: 100%;
+  }
 }
 
 .production-content {
@@ -43,6 +65,12 @@
   flex: 1;
   height: 100%;
   position: relative;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+  }
 }
 
 .production-text {
@@ -56,12 +84,31 @@
   font-weight: bold;
   color: #4dabf7;
   margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 }
 
 .production-description {
   font-size: 18px;
   margin-bottom: 30px;
   max-width: 600px;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
 }
 
 .contact-button {
@@ -81,6 +128,14 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+    margin: 10px auto;
+  }
 }
 
 .production-image-container {
@@ -90,6 +145,20 @@
   flex: 1;
   height: 100%;
   position: relative;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 300px;
+    max-height: 400px;
+    aspect-ratio: 1;
+  }
+  
+  @media (max-width: 480px) {
+    min-height: 250px;
+    max-height: 300px;
+  }
 }
 
 .production-image {
@@ -97,4 +166,15 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   max-height: 600px;
   object-fit: contain;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-height: 400px;
+  }
+  
+  @media (max-width: 480px) {
+    max-height: 300px;
+  }
 }

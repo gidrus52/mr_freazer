@@ -1,0 +1,86 @@
+// Главный файл мобильных стилей
+
+@import './variables';
+@import './mixins';
+@import './app-view';
+@import './production-view';
+@import './main-page';
+
+// Общие мобильные стили
+
+// Скрытие горизонтального скролла
+* {
+  @include mobile {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// Улучшение производительности на мобильных
+img {
+  @include mobile {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Адаптивные контейнеры
+.container {
+  @include mobile {
+    width: 100%;
+    padding: $mobile-padding;
+    box-sizing: border-box;
+  }
+}
+
+// Адаптивные кнопки
+button, .button {
+  @include mobile {
+    min-height: 44px; // Минимальный размер для удобного нажатия
+    touch-action: manipulation;
+  }
+}
+
+// Адаптивные формы
+input, textarea, select {
+  @include mobile {
+    font-size: $mobile-font-size-base !important;
+    padding: $mobile-padding !important;
+    min-height: 44px; // Минимальный размер для удобного нажатия
+  }
+}
+
+// Улучшение читаемости текста на мобильных
+p, span, div {
+  @include mobile {
+    line-height: 1.6;
+    word-wrap: break-word;
+  }
+}
+
+// Адаптивные заголовки
+h1 {
+  @include mobile {
+    font-size: $mobile-font-size-xxl !important;
+  }
+}
+
+h2 {
+  @include mobile {
+    font-size: $mobile-font-size-xl !important;
+  }
+}
+
+h3 {
+  @include mobile {
+    font-size: $mobile-font-size-large !important;
+  }
+}
+
+// Улучшение прокрутки на мобильных
+.scrollable {
+  @include mobile {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
+}
+

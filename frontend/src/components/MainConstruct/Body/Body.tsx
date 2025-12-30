@@ -19,7 +19,7 @@ export default defineComponent({
                 <NLayout position={'static'} nativeScrollbar={''} >
                     {/*<div style={this.currentRoute.name == 'Advertisement' ? 'height: 7rem;' : 'height: 0rem;'}></div>*/}
                     {this.currentRoute.name === 'Main' ? (
-                        <div style={{height: 'calc(100vh - 9vh)', overflow: 'hidden', margin: 0, padding: 0}}>
+                        <div style={{height: 'calc(100vh - 9vh)', overflow: 'auto', margin: 0, padding: 0, WebkitOverflowScrolling: 'touch'}} class="main-page-container">
                             <RouterView/>
                         </div>
                     ) : (

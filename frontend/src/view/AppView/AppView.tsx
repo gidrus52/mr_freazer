@@ -658,6 +658,7 @@ const AppView = defineComponent({
                                 <NLayout 
                                     key={subCategory.key}
                                     id={subCategory.key}
+                                    class="app-block"
                                     style={{
                                         background: this.getSectionColor(index),
                                         height: '100vh',
@@ -667,7 +668,7 @@ const AppView = defineComponent({
                                         overflow: 'hidden'
                                     }}
                                 >
-                                    <NFlex style={{
+                                    <NFlex class="app-flex" style={{
                                         maxWidth: '1400px',
                                         width: '100%',
                                         height: '100%',
@@ -730,36 +731,31 @@ const AppView = defineComponent({
                                         </NSpace>
                                         
                                         {/* Текст справа */}
-                                        <NSpace style={{
+                                        <NSpace class="app-content" style={{
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             flex: 1,
                                             height: '100%'
                                         }}>
-                                            <NSpace vertical style={{
+                                            <NSpace vertical class="app-text" style={{
                                                 textAlign: 'center',
                                                 color: '#e0e0e0',
                                                 lineHeight: '1.6'
                                             }}>
-                                                <NText style={{
-                                                    fontSize: '32px',
-                                                    fontWeight: 'bold',
-                                                    color: '#4dabf7',
-                                                    marginBottom: '20px',
-                                                    display: 'block'
-                                                }}>
+                                                <div class="app-title">
                                                     {subCategory.label}
-                                                </NText>
-                                                <NText style={{fontSize: '18px', marginBottom: '30px', display: 'block', whiteSpace: 'pre-line'}}>
+                                                </div>
+                                                <p class="app-description">
                                                     {subCategory.key === 'surron-belts' 
                                                         ? this.t('app.surronBelts.description')
                                                         : this.t('app.surronSuspension.description')
                                                     }
-                                                </NText>
+                                                </p>
                                                 <NButton 
                                                     type="default" 
                                                     size="large"
+                                                    class="app-contact-button"
                                                     onClick={this.openModal}
                                                     style={{
                                                         fontSize: '18px',

@@ -21,134 +21,95 @@ const MainPage = defineComponent({
         },
         render() {
             return (
-                <NFlex vertical style={{height: '100%', overflow: 'hidden', boxSizing: 'border-box', margin: 0, padding: 0}} justify={'space-between'} align={'center'}>
-                    <NFlex style={{flexDirection: 'row', height: 'auto', flexShrink: 0, padding: '10px 0'}} align={'center'} justify={'space-around'}>
-                        <NFlex style={'flex-direction: row; flex-wrap: nowrap;'} align={'center'}>
-                            <NFlex align={'center'} justify={'center'} class={'name_inner_block'}>МИСТЕР
-                                ФРЕЗЕР
-                            </NFlex>
-                            <NFlex>
-                                <NImage width={300} src={getImageUrl("icons/777777.png")}/></NFlex>
-                        </NFlex>
-                        <NFlex style={'flex-direction: row; flex-wrap: nowrap;'} align={'center'}>
-                            <NFlex>
-                                <NIcon size={this.fontSize}>
-                                    <LocationOnOutlined></LocationOnOutlined>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex>
-                                <NFlex>
-                                    <div>{this.t('main.address')}</div>
-                                    <div>{this.t('main.city')}</div>
-                                </NFlex>
-                            </NFlex>
-                        </NFlex>
-                        <NFlex style={'flex-direction: row; flex-wrap: nowrap;'} align={'center'}>
-                            <NFlex>
-                                <NIcon size={this.fontSize}>
-                                    <AccessTimeFilled></AccessTimeFilled>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex>
-                                <NFlex>
-                                    <div>{this.t('main.workDays')}</div>
-                                    <div>{this.t('main.workHours')}</div>
-                                </NFlex>
-                            </NFlex>
-                        </NFlex>
-                        <NFlex style={'flex-direction: row; flex-wrap: nowrap;'} align={'center'}>
-                            <NFlex span={1}>
-                                <NIcon size={this.fontSize}>
-                                    <LocalPhoneRound></LocalPhoneRound>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex span={1}>
-                                <NGrid cols={1}>
-                                    <NGridItem>+7 (495) 728-5000 </NGridItem>
-                                    <NGridItem>+7 (495) 728-6000 </NGridItem>
-                                </NGrid>
-                            </NFlex>
-                        </NFlex>
-                    </NFlex>
-                    <NFlex style={{height: '33vh', width: '100%', flexShrink: 0}}><NGrid cols={1} style={{height: '100%'}} align={'center'}>
-                        <NGridItem style={{height: '100%'}}>
-                            <div 
-                                class={'main_block main_background_block'}
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    backgroundImage: `url(${backgroundImage})`,
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: '-800px -1800px',
-                                    color: '#888888',
-                                    display: 'block'
-                                }}
-                            >1</div>
-                        </NGridItem>
-                    </NGrid></NFlex>
-                    <NFlex align={'center'} justify={'space-around'} style={{flexDirection: 'row', flexWrap: 'nowrap', flex: '1 1 auto', minHeight: 0, flexShrink: 0}}>
-                        <NFlex align={'center'}>
-                            <NFlex>
-                                <NIcon size={60}>
-                                    <ExpandCircleDownOutlined/>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex>
-                                <NFlex>
-                                    <NFlex>{this.t('main.milling')}</NFlex>
-                                    <NFlex>{this.t('main.millingDesc')}</NFlex>
-                                </NFlex>
-
-                            </NFlex>
-
-
-                        </NFlex>
-                        <NFlex align={'center'} style={'flex-direction: row;'}>
-                            <NFlex>
-                                <NIcon size={60}>
-                                    <ExpandCircleDownOutlined/>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex>
-                                <NFlex>
-                                    <NFlex>{this.t('main.turning')}</NFlex>
-                                    <NFlex>{this.t('main.turningDesc')}</NFlex>
-                                </NFlex>
-                            </NFlex>
-
-                        </NFlex>
-                        <NFlex align={'center'}>
-                            <NFlex>
-                                <NIcon size={60}>
-                                    <ExpandCircleDownOutlined/>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex>
-                                <NFlex>
-                                    <NFlex>{this.t('main.welding')}</NFlex>
-                                    <NFlex>{this.t('main.weldingDesc')}</NFlex>
-                                </NFlex>
-
-                            </NFlex>
-                        </NFlex>
-                        <NFlex align={'center'}>
-                            <NFlex>
-                                <NIcon size={60}>
-                                    <ExpandCircleDownOutlined/>
-                                </NIcon>
-                            </NFlex>
-                            <NFlex>
-                                <NFlex>
-                                    <NFlex>{this.t('main.cutting')}</NFlex>
-                                    <NFlex>{this.t('main.cuttingDesc')}</NFlex>
-                                </NFlex>
-                            </NFlex>
-                        </NFlex>
-                    </NFlex>
-                </NFlex>
-
-
-
+                <div class="main-page">
+                    <div class="main-header">
+                        <div class="main-header-content">
+                            <div class="main-logo">
+                                <div class="logo-text">МИСТЕР ФРЕЗЕР</div>
+                                <NImage width={80} height={80} src={getImageUrl("icons/777777.png")} class="logo-image"/>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <NIcon size={24} class="contact-icon">
+                                        <LocationOnOutlined></LocationOnOutlined>
+                                    </NIcon>
+                                    <div class="contact-text">
+                                        <div class="contact-label">Адрес</div>
+                                        <div class="contact-value">{this.t('main.address')}</div>
+                                        <div class="contact-value">{this.t('main.city')}</div>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <NIcon size={24} class="contact-icon">
+                                        <AccessTimeFilled></AccessTimeFilled>
+                                    </NIcon>
+                                    <div class="contact-text">
+                                        <div class="contact-label">Время работы</div>
+                                        <div class="contact-value">{this.t('main.workDays')}</div>
+                                        <div class="contact-value">{this.t('main.workHours')}</div>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <NIcon size={24} class="contact-icon">
+                                        <LocalPhoneRound></LocalPhoneRound>
+                                    </NIcon>
+                                    <div class="contact-text">
+                                        <div class="contact-label">Телефон</div>
+                                        <div class="contact-value">+7 (495) 728-5000</div>
+                                        <div class="contact-value">+7 (495) 728-6000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-hero">
+                        <div class="hero-background" style={{backgroundImage: `url(${backgroundImage})`}}></div>
+                        <div class="hero-content">
+                            <h1 class="hero-title">МИСТЕР ФРЕЗЕР</h1>
+                            <p class="hero-subtitle">Профессиональные услуги по металлообработке</p>
+                        </div>
+                    </div>
+                    <div class="services-section">
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <NIcon size={40}>
+                                        <ExpandCircleDownOutlined/>
+                                    </NIcon>
+                                </div>
+                                <h3 class="service-title">{this.t('main.milling')}</h3>
+                                <p class="service-description">{this.t('main.millingDesc')}</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <NIcon size={40}>
+                                        <ExpandCircleDownOutlined/>
+                                    </NIcon>
+                                </div>
+                                <h3 class="service-title">{this.t('main.turning')}</h3>
+                                <p class="service-description">{this.t('main.turningDesc')}</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <NIcon size={40}>
+                                        <ExpandCircleDownOutlined/>
+                                    </NIcon>
+                                </div>
+                                <h3 class="service-title">{this.t('main.welding')}</h3>
+                                <p class="service-description">{this.t('main.weldingDesc')}</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <NIcon size={40}>
+                                        <ExpandCircleDownOutlined/>
+                                    </NIcon>
+                                </div>
+                                <h3 class="service-title">{this.t('main.cutting')}</h3>
+                                <p class="service-description">{this.t('main.cuttingDesc')}</p>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
             )
         }
 
