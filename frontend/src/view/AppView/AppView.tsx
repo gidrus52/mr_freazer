@@ -13,7 +13,7 @@ import {
     NIcon,
     useMessage
 } from 'naive-ui'
-import {defineComponent, ref, computed, watch} from "vue";
+import {defineComponent, ref, computed, watch, onMounted, onUnmounted} from "vue";
 import { LocalPhoneRound } from '@vicons/material'
 import { useTranslation } from "../../utils/translations";
 import { useLanguageStore } from "../../stores/languageStore";
@@ -248,6 +248,42 @@ const AppView = defineComponent({
             const getSectionKeys = () => {
                 return subCategories.value.map(sub => sub.key)
             }
+
+            // Динамическое определение размеров экрана для мобильных устройств
+            const updateScreenDimensions = () => {
+                if (typeof window !== 'undefined') {
+                    const width = window.innerWidth
+                    const height = window.innerHeight
+                    const isMobile = width <= 768 // Мобильное устройство
+                    
+                    if (isMobile) {
+                        // Устанавливаем CSS переменные для размеров экрана
+                        document.documentElement.style.setProperty('--mobile-screen-width', `${width}px`)
+                        document.documentElement.style.setProperty('--mobile-screen-height', `${height}px`)
+                        // Ширина контента - немного меньше ширины экрана для отступов
+                        const contentWidth = Math.min(width - 20, 400) // Максимум 400px, но не больше ширины экрана минус отступы
+                        document.documentElement.style.setProperty('--mobile-content-width', `${contentWidth}px`)
+                    } else {
+                        // Для десктопа сбрасываем переменные
+                        document.documentElement.style.setProperty('--mobile-screen-width', 'auto')
+                        document.documentElement.style.setProperty('--mobile-screen-height', 'auto')
+                        document.documentElement.style.setProperty('--mobile-content-width', 'auto')
+                    }
+                }
+            }
+
+            // Инициализация размеров при монтировании
+            onMounted(() => {
+                updateScreenDimensions()
+                window.addEventListener('resize', updateScreenDimensions)
+                window.addEventListener('orientationchange', updateScreenDimensions)
+            })
+
+            // Очистка при размонтировании
+            onUnmounted(() => {
+                window.removeEventListener('resize', updateScreenDimensions)
+                window.removeEventListener('orientationchange', updateScreenDimensions)
+            })
 
             // Прокрутка к секции по индексу
             const scrollToSection = (index: number): void => {
