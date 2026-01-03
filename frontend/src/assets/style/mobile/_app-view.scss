@@ -7,8 +7,9 @@
   @include mobile {
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: auto !important;
+    height: 100vh !important;
     -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: y mandatory !important;
   }
 }
 
@@ -17,6 +18,7 @@
   @include mobile {
     height: 100vh !important;
     min-height: 100vh !important;
+    max-height: 100vh !important;
     padding: 8px !important;
     flex-direction: column !important;
     gap: 10px !important;
@@ -24,6 +26,8 @@
     align-items: center !important;
     justify-content: center !important;
     overflow: hidden !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
   }
 }
 

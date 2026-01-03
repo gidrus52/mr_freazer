@@ -7,22 +7,27 @@
   @include mobile {
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: auto !important;
+    height: 100vh !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: y mandatory !important;
   }
 }
 
 // Блоки продукции
 .production-block {
   @include mobile {
-    height: auto !important;
-    min-height: auto !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
     padding: 8px !important;
     flex-direction: column !important;
     gap: 10px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    overflow: visible !important;
+    overflow: hidden !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
   }
 }
 
