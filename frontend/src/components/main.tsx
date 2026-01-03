@@ -4,6 +4,7 @@ import {defineComponent,  ref, computed} from "vue";
 import {useTemplateRef} from "vue";
 
 import MilingIcon from "../assets/img/icons/milling";
+import TelegramIcon from "../assets/img/icons/telegramIcon";
 import backgroundImage from "../assets/img/background/back_01.jpg";
 import { getImageUrl } from "../utils/imageUtils";
 import { useTranslation } from "../utils/translations";
@@ -50,13 +51,13 @@ const MainPage = defineComponent({
                                     </div>
                                 </div>
                                 <div class="contact-item">
-                                    <NIcon size={24} class="contact-icon">
-                                        <LocalPhoneRound></LocalPhoneRound>
-                                    </NIcon>
+                                    <div class="contact-icon" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px'}}>
+                                        <TelegramIcon fillColor="#0088cc" width={24} height={24} />
+                                    </div>
                                     <div class="contact-text">
-                                        <div class="contact-label">Телефон</div>
-                                        <div class="contact-value">+7 (495) 728-5000</div>
-                                        <div class="contact-value">+7 (495) 728-6000</div>
+                                        <div class="contact-label">Telegram</div>
+                                        <div class="contact-value">@deniswasmaked87</div>
+                                        <div class="contact-value"></div>
                                     </div>
                                 </div>
                             </div>

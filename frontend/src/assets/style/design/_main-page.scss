@@ -17,9 +17,34 @@
 }
 
 .main-page {
-  min-height: 100vh;
+  height: calc(100vh - 9vh);
+  min-height: calc(100vh - 9vh);
+  max-height: calc(100vh - 9vh);
   background: #1a1a1a;
   color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Контейнер для главной страницы
+.main-page-container {
+  background: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: calc(100vh - 9vh);
+  overflow: hidden;
+}
+
+// Убираем черную полосу снизу - стили для NLayout на главной странице
+.n-layout:has(.main-page-container) {
+  background: #1a1a1a !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 // Заголовок с контактами
@@ -27,9 +52,20 @@
   background: #2d2d2d;
   border-bottom: 1px solid #404040;
   padding: 20px 30px;
+  height: calc((100vh - 9vh) / 4);
+  min-height: 0;
+  max-height: calc((100vh - 9vh) / 4);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
   
   @media (max-width: 768px) {
     padding: 15px 20px;
+    height: auto;
+    min-height: auto;
+    max-height: none;
   }
 }
 
@@ -57,7 +93,7 @@
   .logo-text {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #4dabf7;
+    color: #d0d0d0;
     letter-spacing: -0.02em;
     
     @media (max-width: 768px) {
@@ -115,7 +151,7 @@
     }
     
     .contact-icon {
-      color: #4dabf7;
+      color: #d0d0d0;
       font-size: 24px;
     }
     
@@ -140,13 +176,18 @@
 // Главный блок с фоном
 .main-hero {
   position: relative;
-  height: 40vh;
-  min-height: 400px;
+  height: calc((100vh - 9vh) * 3 / 8);
+  min-height: 0;
+  max-height: calc((100vh - 9vh) * 3 / 8);
   overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
   
   @media (max-width: 768px) {
     height: auto;
-    min-height: 300px;
+    min-height: auto;
+    max-height: none;
     overflow: visible;
   }
   
@@ -181,7 +222,7 @@
       font-size: 3.5rem;
       font-weight: bold;
       margin-bottom: 20px;
-      color: #4dabf7;
+      color: #d0d0d0;
       
       @media (max-width: 768px) {
         font-size: 2.5rem;
@@ -209,11 +250,24 @@
 
 // Блоки услуг
 .services-section {
-  padding: 60px 30px;
+  padding: 30px 30px;
   background: #1a1a1a;
+  height: calc((100vh - 9vh) * 3 / 8);
+  min-height: 0;
+  max-height: calc((100vh - 9vh) * 3 / 8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
   
   @media (max-width: 768px) {
     padding: 40px 20px;
+    height: auto;
+    min-height: auto;
+    max-height: none;
   }
 }
 
@@ -247,7 +301,7 @@
     width: 80px;
     height: 80px;
     margin: 0 auto 20px;
-    color: #4dabf7;
+    color: #d0d0d0;
     font-size: 48px;
     display: flex;
     align-items: center;

@@ -3,7 +3,7 @@
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 999; // Ниже основного хэдера, чтобы не мешать
+  z-index: 1001; // Выше основного хэдера, чтобы быть поверх него
   
   @media (max-width: 768px) {
     top: 15px;

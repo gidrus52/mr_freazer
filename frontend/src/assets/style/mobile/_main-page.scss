@@ -18,7 +18,7 @@
   @include mobile {
     overflow: visible !important;
     height: auto !important;
-    min-height: 100vh !important;
+    min-height: auto !important;
     display: flex !important;
     flex-direction: column !important;
   }
@@ -28,6 +28,12 @@
 .main-header {
   @include mobile {
     padding: $mobile-padding !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
   }
 }
 
@@ -35,8 +41,37 @@
   @include mobile {
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: $mobile-gap !important;
     padding: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.main-logo {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: $mobile-gap-small !important;
+    text-align: center !important;
+  }
+}
+
+.contact-info {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: $mobile-gap !important;
+    width: 100% !important;
+  }
+  
+  .contact-item {
+    @include mobile {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
   }
 }
 
@@ -45,6 +80,12 @@
   @include mobile {
     padding: $mobile-padding-large !important;
     width: 100% !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
   }
 }
 
@@ -53,6 +94,9 @@
     grid-template-columns: 1fr !important;
     gap: $mobile-gap !important;
     width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 }
 
@@ -70,6 +114,7 @@
     flex-direction: column !important;
     height: auto !important;
     min-height: auto !important;
+    max-height: none !important;
     overflow: visible !important;
     position: relative !important;
   }

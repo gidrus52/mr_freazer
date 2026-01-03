@@ -1,6 +1,16 @@
  a {
-       color: #888888!important;
-    }
+      color: #888888!important;
+   }
+
+// Фиксация хэдера
+.n-layout-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  width: 100% !important;
+}
 
 .header-element {
    display: flex; align-items: center; justify-content: center; height: 50px;

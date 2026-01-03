@@ -117,6 +117,29 @@ const AppView = defineComponent({
             let lastImageScrollTime = 0
             const IMAGE_SCROLL_DELAY = 300 // 300ms delay для переключения картинок
 
+            // Автопрокрутка изображений
+            let autoScrollIntervals: { [key: string]: number } = {}
+            const AUTO_SCROLL_INTERVAL = 3000 // 3 секунды
+
+            const startAutoScroll = (subCategoryKey: string) => {
+                // Останавливаем предыдущий интервал, если есть
+                if (autoScrollIntervals[subCategoryKey]) {
+                    clearInterval(autoScrollIntervals[subCategoryKey])
+                }
+                
+                // Запускаем новый интервал
+                autoScrollIntervals[subCategoryKey] = setInterval(() => {
+                    nextImage(subCategoryKey)
+                }, AUTO_SCROLL_INTERVAL) as unknown as number
+            }
+
+            const stopAutoScroll = (subCategoryKey: string) => {
+                if (autoScrollIntervals[subCategoryKey]) {
+                    clearInterval(autoScrollIntervals[subCategoryKey])
+                    delete autoScrollIntervals[subCategoryKey]
+                }
+            }
+
             // Обработчик скролла для переключения картинок
             const handleImageWheel = (event: WheelEvent, subCategoryKey: string) => {
                 event.preventDefault()
@@ -135,6 +158,46 @@ const AppView = defineComponent({
                 } else if (event.deltaY < 0) { // Scrolling up - предыдущая картинка
                     prevImage(subCategoryKey)
                 }
+            }
+
+            // Обработка тача для мобильных устройств
+            let touchStartX = 0
+            let touchStartY = 0
+            const SWIPE_THRESHOLD = 50 // Минимальное расстояние для свайпа
+
+            const handleTouchStart = (event: TouchEvent, subCategoryKey: string) => {
+                touchStartX = event.touches[0].clientX
+                touchStartY = event.touches[0].clientY
+                // Останавливаем автопрокрутку при начале тача
+                stopAutoScroll(subCategoryKey)
+            }
+
+            const handleTouchEnd = (event: TouchEvent, subCategoryKey: string) => {
+                if (!touchStartX || !touchStartY) return
+                
+                const touchEndX = event.changedTouches[0].clientX
+                const touchEndY = event.changedTouches[0].clientY
+                
+                const deltaX = touchEndX - touchStartX
+                const deltaY = touchEndY - touchStartY
+                
+                // Проверяем, что это горизонтальный свайп (не вертикальный скролл)
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+                    if (deltaX > 0) {
+                        // Свайп вправо - предыдущее изображение
+                        prevImage(subCategoryKey)
+                    } else {
+                        // Свайп влево - следующее изображение
+                        nextImage(subCategoryKey)
+                    }
+                }
+                
+                // Сбрасываем координаты
+                touchStartX = 0
+                touchStartY = 0
+                
+                // Перезапускаем автопрокрутку
+                startAutoScroll(subCategoryKey)
             }
             
             // Категории для меню - используем computed для реактивности переводов
@@ -276,12 +339,18 @@ const AppView = defineComponent({
                 updateScreenDimensions()
                 window.addEventListener('resize', updateScreenDimensions)
                 window.addEventListener('orientationchange', updateScreenDimensions)
+                // Запускаем автопрокрутку для всех секций
+                startAutoScroll('surron-belts')
+                startAutoScroll('surron-suspension')
             })
 
             // Очистка при размонтировании
             onUnmounted(() => {
                 window.removeEventListener('resize', updateScreenDimensions)
                 window.removeEventListener('orientationchange', updateScreenDimensions)
+                // Останавливаем автопрокрутку
+                stopAutoScroll('surron-belts')
+                stopAutoScroll('surron-suspension')
             })
 
             // Прокрутка к секции по индексу
@@ -553,6 +622,10 @@ const AppView = defineComponent({
                 prevImage,
                 getCurrentImage,
                 handleImageWheel,
+                handleTouchStart,
+                handleTouchEnd,
+                startAutoScroll,
+                stopAutoScroll,
                 t,
                 openModal,
                 closeModal,
@@ -761,6 +834,8 @@ const AppView = defineComponent({
                                 class="carousel-container"
                                 data-image-container="true"
                                 onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
+                                onTouchstart={(e: TouchEvent) => this.handleTouchStart(e, 'surron-suspension')}
+                                onTouchend={(e: TouchEvent) => this.handleTouchEnd(e, 'surron-suspension')}
                                 style={{
                                     width: '600px',
                                     height: '600px',
@@ -788,6 +863,8 @@ const AppView = defineComponent({
                                     }}
                                     alt={this.t('app.suspension')}
                                     onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
+                                    onTouchstart={(e: TouchEvent) => this.handleTouchStart(e, 'surron-suspension')}
+                                    onTouchend={(e: TouchEvent) => this.handleTouchEnd(e, 'surron-suspension')}
                                 />
                             </NSpace>
                             <NSpace class="app-content">

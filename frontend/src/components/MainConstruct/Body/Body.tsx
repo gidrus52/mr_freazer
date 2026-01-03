@@ -16,10 +16,10 @@ export default defineComponent({
     },
     render() {
         return (
-                <NLayout position={'static'} nativeScrollbar={''} >
+                <NLayout position={'static'} nativeScrollbar={''} style={this.currentRoute.name === 'Main' ? {background: '#1a1a1a', margin: 0, padding: 0} : {marginTop: '9vh'}}>
                     {/*<div style={this.currentRoute.name == 'Advertisement' ? 'height: 7rem;' : 'height: 0rem;'}></div>*/}
                     {this.currentRoute.name === 'Main' ? (
-                        <div style={{height: 'calc(100vh - 9vh)', overflow: 'auto', margin: 0, padding: 0, WebkitOverflowScrolling: 'touch'}} class="main-page-container">
+                        <div style={{height: 'calc(100vh - 9vh)', overflow: 'hidden', margin: 0, padding: 0, background: '#1a1a1a'}} class="main-page-container">
                             <RouterView/>
                         </div>
                     ) : (
