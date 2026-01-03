@@ -6,3 +6,24 @@
    display: flex; align-items: center; justify-content: center; height: 50px;
 }
 
+// Добавляем расстояние между элементами навигации в мобильной версии
+@media (max-width: 768px) {
+  .n-grid-item {
+    padding: 0 16px !important;
+  }
+  
+  .header-element {
+    margin: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .n-grid-item {
+    padding: 0 12px !important;
+  }
+  
+  .header-element {
+    margin: 0 6px;
+  }
+}
+

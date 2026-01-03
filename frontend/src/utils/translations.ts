@@ -38,7 +38,7 @@ export type TranslationKey =
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   ru: {
     // Navigation
-    'nav.home': 'Главная',
+    'nav.home': 'На главную',
     'nav.ourServices': 'Наши услуги',
     'nav.ourProducts': 'Наши товары',
     'nav.login': 'Войти',

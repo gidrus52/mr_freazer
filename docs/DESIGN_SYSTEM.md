@@ -199,3 +199,4 @@ frontend/src/assets/style/design/
 - [ ] Добавить микро-интерактивности
 
 
+

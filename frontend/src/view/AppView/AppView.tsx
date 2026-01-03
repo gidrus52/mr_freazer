@@ -183,10 +183,10 @@ const AppView = defineComponent({
                 // Устанавливаем выбранную категорию
                 selectedCategory.value = categoryKey
                 
-                // Небольшая задержка, чтобы subCategories обновились
+                // Небольшая задержка для плавной прокрутки
                 setTimeout(() => {
                     // Находим индекс выбранной подкатегории
-                    const sectionKeys = subCategories.value.map(sub => sub.key)
+                    const sectionKeys = ['surron-belts', 'surron-suspension']
                     const sectionIndex = sectionKeys.indexOf(subCategoryKey)
                     
                     if (sectionIndex !== -1) {
@@ -211,9 +211,8 @@ const AppView = defineComponent({
                 if (firstCategoryWithSubmenu) {
                     selectedCategory.value = firstCategoryWithSubmenu.key
                     // Устанавливаем первую подкатегорию как текущую
-                    if (firstCategoryWithSubmenu.submenu && firstCategoryWithSubmenu.submenu.length > 0) {
-                        currentSubCategoryKey.value = firstCategoryWithSubmenu.submenu[0].key
-                    }
+                    currentSubCategoryKey.value = 'surron-belts'
+                    currentSectionIndex = 0
                 }
             }
 
@@ -246,7 +245,7 @@ const AppView = defineComponent({
 
             // Получаем ключи секций для навигации
             const getSectionKeys = () => {
-                return subCategories.value.map(sub => sub.key)
+                return ['surron-belts', 'surron-suspension']
             }
 
             // Динамическое определение размеров экрана для мобильных устройств
@@ -307,7 +306,8 @@ const AppView = defineComponent({
 
             // Обработчик скролла для навигации по секциям
             const handleWheel = (event: WheelEvent): void => {
-                if (subCategories.value.length === 0) return
+                const sectionKeys = ['surron-belts', 'surron-suspension']
+                if (sectionKeys.length === 0) return
                 
                 // Проверяем, не пришло ли событие из области изображения
                 const target = event.target as HTMLElement
@@ -335,18 +335,16 @@ const AppView = defineComponent({
                 lastScrollTime = now
 
                 // Переключение между секциями при скролле
-                if (event.deltaY > 0 && currentSectionIndex < subCategories.value.length - 1) { // Scrolling down
+                if (event.deltaY > 0 && currentSectionIndex < sectionKeys.length - 1) { // Scrolling down
                     currentSectionIndex = currentSectionIndex + 1
-                    const sections = getSectionKeys()
-                    if (sections[currentSectionIndex]) {
-                        currentSubCategoryKey.value = sections[currentSectionIndex]
+                    if (sectionKeys[currentSectionIndex]) {
+                        currentSubCategoryKey.value = sectionKeys[currentSectionIndex]
                     }
                     scrollToSection(currentSectionIndex)
                 } else if (event.deltaY < 0 && currentSectionIndex > 0) { // Scrolling up
                     currentSectionIndex = currentSectionIndex - 1
-                    const sections = getSectionKeys()
-                    if (sections[currentSectionIndex]) {
-                        currentSubCategoryKey.value = sections[currentSectionIndex]
+                    if (sectionKeys[currentSectionIndex]) {
+                        currentSubCategoryKey.value = sectionKeys[currentSectionIndex]
                     }
                     scrollToSection(currentSectionIndex)
                 }
@@ -688,137 +686,139 @@ const AppView = defineComponent({
                             </NSpace>
                         )}
                     </NSpace>
-                        {this.subCategories.length > 0 ? (
-                            // Отображение секций для каждой подкатегории
-                            this.subCategories.map((subCategory, index) => (
-                                <NLayout 
-                                    key={subCategory.key}
-                                    id={subCategory.key}
-                                    class="app-block"
+                    {/* Первая секция - Ременная передача */}
+                    <NLayout id="surron-belts" class="app-block top-block">
+                        <NFlex class="app-flex">
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-belts')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <img
+                                    src={this.getCurrentImage('surron-belts')}
                                     style={{
-                                        background: this.getSectionColor(index),
-                                        height: '100vh',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        overflow: 'hidden'
-                                    }}
-                                >
-                                    <NFlex class="app-flex" style={{
-                                        maxWidth: '1400px',
                                         width: '100%',
                                         height: '100%',
-                                        padding: '0 20px',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '40px',
-                                        overflow: 'hidden',
-                                        boxSizing: 'border-box',
-                                        flexWrap: 'nowrap'
-                                    }}>
-                                        {/* Изображение слева */}
-                                        <NSpace
-                                            data-image-container="true"
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                width: '600px',
-                                                height: '600px',
-                                                minWidth: '600px',
-                                                maxWidth: '600px',
-                                                minHeight: '600px',
-                                                maxHeight: '600px',
-                                                position: 'relative',
-                                                overflow: 'hidden',
-                                                flexShrink: 0
-                                            }}
-                                        >
-                                            <NSpace
-                                                style={{
-                                                    width: '100%',
-                                                    height: '100%',
-                                                    maxWidth: '600px',
-                                                    maxHeight: '600px',
-                                                    minWidth: '600px',
-                                                    minHeight: '600px',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    overflow: 'hidden',
-                                                    position: 'relative'
-                                                }}
-                                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, subCategory.key)}
-                                            >
-                                                <img 
-                                                    src={this.getCurrentImage(subCategory.key)} 
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        maxWidth: '100%',
-                                                        maxHeight: '100%',
-                                                        objectFit: 'contain',
-                                                        display: 'block',
-                                                        margin: 'auto'
-                                                    }}
-                                                    alt={subCategory.label}
-                                                />
-                                            </NSpace>
-                                        </NSpace>
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('app.beltDrive')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-belts')}
+                                />
+                            </NSpace>
+                            <NSpace class="app-content">
+                                <div class="app-text">
+                                    <div class="app-title">
+                                        {this.t('app.beltDrive')}
+                                    </div>
+                                    <p class="app-description">
+                                        {this.t('app.surronBelts.description')}
+                                    </p>
+                                    <p class="app-description">
                                         
-                                        {/* Текст справа */}
-                                        <NSpace class="app-content" style={{
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="app-contact-button"
+                                        style={{
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            flex: 1,
-                                            height: '100%'
-                                        }}>
-                                            <NSpace vertical class="app-text" style={{
-                                                textAlign: 'center',
-                                                color: '#e0e0e0',
-                                                lineHeight: '1.6'
-                                            }}>
-                                                <div class="app-title">
-                                                    {subCategory.label}
-                                                </div>
-                                                <p class="app-description">
-                                                    {subCategory.key === 'surron-belts' 
-                                                        ? this.t('app.surronBelts.description')
-                                                        : this.t('app.surronSuspension.description')
-                                                    }
-                                                </p>
-                                                <NButton 
-                                                    type="default" 
-                                                    size="large"
-                                                    class="app-contact-button"
-                                                    onClick={this.openModal}
-                                                    style={{
-                                                        fontSize: '18px',
-                                                        padding: '12px 30px',
-                                                        borderRadius: '8px',
-                                                        fontWeight: 'bold',
-                                                        backgroundColor: '#1a1a1a',
-                                                        border: '2px solid #404040',
-                                                        color: '#ffffff',
-                                                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        margin: '0 auto'
-                                                    }}
-                                                >
-                                                    <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                                        <LocalPhoneRound></LocalPhoneRound>
-                                                    </NIcon>
-                                                    {this.t('app.contactUs')}
-                                                </NButton>
-                                            </NSpace>
-                                        </NSpace>
-                                    </NFlex>
-                                </NLayout>
-                            ))
-                        ) : null}
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('app.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
+                        </NFlex>
+                    </NLayout>
+                    {/* Вторая секция - Подвеска */}
+                    <NLayout id="surron-suspension" class="app-block next-block-1">
+                        <NFlex class="app-flex">
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <img
+                                    src={this.getCurrentImage('surron-suspension')}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('app.suspension')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
+                                />
+                            </NSpace>
+                            <NSpace class="app-content">
+                                <div class="app-text">
+                                    <div class="app-title">
+                                        {this.t('app.suspension')}
+                                    </div>
+                                    <p class="app-description">
+                                        {this.t('app.surronSuspension.description')}
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="app-contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('app.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
+                        </NFlex>
+                    </NLayout>
                         
                     {/* Модальное окно с формой */}
                         <NModal

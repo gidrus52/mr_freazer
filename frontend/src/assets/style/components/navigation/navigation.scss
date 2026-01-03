@@ -3,16 +3,18 @@
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 1000;
+  z-index: 999; // Ниже основного хэдера, чтобы не мешать
   
   @media (max-width: 768px) {
     top: 15px;
-    left: 15px;
+    right: 15px; // Перемещаем в правый верхний угол на мобильных
+    left: auto;
   }
   
   @media (max-width: 480px) {
     top: 10px;
-    left: 10px;
+    right: 10px;
+    left: auto;
   }
 }
 
@@ -61,12 +63,16 @@
     min-width: 250px;
     padding: 15px;
     top: 55px;
+    left: auto; // Выравниваем по правому краю на мобильных
+    right: 0;
   }
   
   @media (max-width: 480px) {
     min-width: 220px;
     padding: 12px;
     top: 50px;
+    left: auto;
+    right: 0;
   }
 }
 

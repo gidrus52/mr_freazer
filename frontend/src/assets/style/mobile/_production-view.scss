@@ -15,13 +15,14 @@
 .production-block {
   @include mobile {
     height: auto !important;
-    min-height: 100vh !important;
-    padding: $mobile-padding !important;
+    min-height: auto !important;
+    padding: 8px !important;
     flex-direction: column !important;
-    gap: $mobile-gap !important;
+    gap: 10px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    overflow: visible !important;
   }
 }
 
@@ -30,41 +31,43 @@
     flex-direction: column !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    gap: $mobile-gap !important;
-    padding: $mobile-padding !important;
-    max-width: 100% !important;
-    width: 100% !important;
+    gap: 10px !important;
+    padding: 8px !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    width: var(--mobile-content-width, 400px) !important;
     height: auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    margin: 0 auto !important;
   }
 }
 
 // Карусель изображений - переопределяем инлайн-стили
 .carousel-container {
   @include mobile {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
     height: auto !important;
-    min-height: 300px !important;
-    max-height: 400px !important;
+    min-height: auto !important;
+    max-height: none !important;
     aspect-ratio: 1 !important;
     flex-shrink: 1 !important;
     margin: 0 auto !important;
-  }
-  
-  @include mobile-small {
-    min-height: 250px !important;
-    max-height: 300px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
   
   // Стили для изображений внутри карусели
   img {
     @include mobile {
       width: 100% !important;
-      height: 100% !important;
+      height: auto !important;
       max-width: 100% !important;
-      max-height: 100% !important;
+      max-height: none !important;
       object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
     }
   }
 }
@@ -73,38 +76,58 @@
 .production-layout .production-block NSpace[data-image-container="true"],
 .production-layout .production-block NSpace.carousel-container {
   @include mobile {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
     height: auto !important;
-    min-height: 300px !important;
-    max-height: 400px !important;
+    min-height: auto !important;
+    max-height: none !important;
     aspect-ratio: 1 !important;
     flex-shrink: 1 !important;
     margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
   
-  @include mobile-small {
-    min-height: 250px !important;
-    max-height: 300px !important;
+  // Внутренний NSpace
+  > NSpace {
+    @include mobile {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+  
+  img {
+    @include mobile {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
   }
 }
 
 // Изображения в ProductionView
 .production-image-container {
   @include mobile {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
     height: auto !important;
-    min-height: 300px !important;
-    max-height: 400px !important;
-    aspect-ratio: 1;
-  }
-  
-  @include mobile-small {
-    min-height: 250px !important;
-    max-height: 300px !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -119,11 +142,15 @@
 // Текстовый контент
 .production-content {
   @include mobile {
-    width: 100% !important;
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
     text-align: center !important;
-    padding: $mobile-padding !important;
+    padding: 8px !important;
     flex: 1 !important;
     height: auto !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -309,28 +336,42 @@
 // Переопределение инлайн-стилей для карусели через атрибут data-image-container
 .production-layout .production-block NSpace[data-image-container="true"] {
   @include mobile {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
     height: auto !important;
-    min-height: 300px !important;
-    max-height: 400px !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
     flex-shrink: 1 !important;
     margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
   
-  @include mobile-small {
-    min-height: 250px !important;
-    max-height: 300px !important;
+  // Внутренний NSpace
+  > NSpace {
+    @include mobile {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
   }
   
   img {
     @include mobile {
       width: 100% !important;
-      height: 100% !important;
+      height: auto !important;
       max-width: 100% !important;
-      max-height: 100% !important;
+      max-height: none !important;
       object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
     }
   }
 }
@@ -389,18 +430,16 @@
 // Переопределение инлайн-стилей для блоков с фиксированными размерами
 .production-layout .production-block NSpace[style*="600px"] {
   @include mobile {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
     height: auto !important;
-    min-height: 300px !important;
-    max-height: 400px !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
     flex-shrink: 1 !important;
-  }
-  
-  @include mobile-small {
-    min-height: 250px !important;
-    max-height: 300px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
 }
 

@@ -101,8 +101,34 @@ const ProductionView = defineComponent({
                 }
             }
 
+            // Динамическое определение размеров экрана для мобильных устройств
+            const updateScreenDimensions = () => {
+                if (typeof window !== 'undefined') {
+                    const width = window.innerWidth
+                    const height = window.innerHeight
+                    const isMobile = width <= 768 // Мобильное устройство
+                    
+                    if (isMobile) {
+                        // Устанавливаем CSS переменные для размеров экрана
+                        document.documentElement.style.setProperty('--mobile-screen-width', `${width}px`)
+                        document.documentElement.style.setProperty('--mobile-screen-height', `${height}px`)
+                        // Ширина контента - немного меньше ширины экрана для отступов
+                        const contentWidth = Math.min(width - 20, 400) // Максимум 400px, но не больше ширины экрана минус отступы
+                        document.documentElement.style.setProperty('--mobile-content-width', `${contentWidth}px`)
+                    } else {
+                        // Для десктопа сбрасываем переменные
+                        document.documentElement.style.setProperty('--mobile-screen-width', 'auto')
+                        document.documentElement.style.setProperty('--mobile-screen-height', 'auto')
+                        document.documentElement.style.setProperty('--mobile-content-width', 'auto')
+                    }
+                }
+            }
+
             // Запускаем автопрокрутку при монтировании
             onMounted(() => {
+                updateScreenDimensions()
+                window.addEventListener('resize', updateScreenDimensions)
+                window.addEventListener('orientationchange', updateScreenDimensions)
                 startAutoScroll('topBlock')
                 startAutoScroll('nextBlock_1')
                 startAutoScroll('nextBlock_2')
@@ -111,6 +137,8 @@ const ProductionView = defineComponent({
 
             // Останавливаем автопрокрутку при размонтировании
             onUnmounted(() => {
+                window.removeEventListener('resize', updateScreenDimensions)
+                window.removeEventListener('orientationchange', updateScreenDimensions)
                 stopAutoScroll('topBlock')
                 stopAutoScroll('nextBlock_1')
                 stopAutoScroll('nextBlock_2')

@@ -1,6 +1,5 @@
 import {RouteRecordRaw, createWebHistory, createRouter} from "vue-router";
 import  AppView from "./view/AppView/AppView"
-import LoginView from "./view/LoginView/LoginView"
 import MainView from "./view/MainView/MainView"
 import ProductionView from "./view/ProductionView/ProductionView"
 import AdminView from "./view/AdminView/AdminView"
@@ -23,18 +22,6 @@ const routes : RouteRecordRaw[] = [
         component: AppView
     },
     {
-        name: "Login",
-        path: "/first_step",
-        component: LoginView,
-        beforeEnter: (to, from, next) => {
-            if (isAuthenticated()) {
-                next('/')
-            } else {
-                next()
-            }
-        }
-    },
-    {
         name: "Admin",
         path: "/admin",
         component: AdminView,
@@ -42,7 +29,7 @@ const routes : RouteRecordRaw[] = [
             if (isAuthenticated()) {
                 next()
             } else {
-                next('/first_step')
+                next('/')
             }
         }
     }
