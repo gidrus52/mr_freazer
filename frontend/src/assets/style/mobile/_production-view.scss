@@ -5,11 +5,14 @@
 // Основной layout ProductionView
 .production-layout {
   @include mobile {
-    overflow-y: auto !important;
+    overflow-y: scroll !important;
     overflow-x: hidden !important;
     height: 100vh !important;
+    max-height: 100vh !important;
     -webkit-overflow-scrolling: touch !important;
     scroll-snap-type: y mandatory !important;
+    scroll-behavior: smooth !important;
+    position: relative !important;
   }
 }
 

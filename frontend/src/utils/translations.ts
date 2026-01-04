@@ -58,8 +58,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'main.cutting': 'Распил металла',
     'main.cuttingDesc': 'Черные и цветные металлы',
     // Production page
-    'production.stamps.title': 'Штампы. Пресформы. Корпуса',
-    'production.stamps.description': 'Профессиональные услуги по изготовлению корпусов из конструкционных, инструментальных сталей, бронированноых сталей, а также алюминия на современных станках с числовым программным управлением.',
+    'production.stamps.title': 'Штампы. Пресформы. Корпуса. Фрезерная и токарная обработки',
+    'production.stamps.description': 'Профессиональные услуги по изготовлению корпусов из конструкционных, инструментальных сталей, а также алюминия на современных станках. Фрезерная и токарная обработки общего назначения',
     'production.pressforms.title': 'Пресформы',
     'production.pressforms.description': 'Изготовление пресформ для различных отраслей промышленности.',
     'production.bodies.title': 'Корпуса',
