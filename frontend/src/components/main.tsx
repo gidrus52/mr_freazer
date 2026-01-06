@@ -1,5 +1,5 @@
 import {NScrollbar, NPageHeader, NGridItem, NGrid, NIcon, NImage, NFlex} from 'naive-ui'
-import {LocationOnOutlined, LocalPhoneRound, AccessTimeFilled, ExpandCircleDownOutlined} from '@vicons/material'
+import {LocationOnOutlined, LocalPhoneRound, AccessTimeFilled, ExpandCircleDownOutlined, EmailOutlined} from '@vicons/material'
 import {defineComponent,  ref, computed} from "vue";
 import {useTemplateRef} from "vue";
 
@@ -26,7 +26,7 @@ const MainPage = defineComponent({
                     <div class="main-header">
                         <div class="main-header-content">
                             <div class="main-logo">
-                                <div class="logo-text">МИСТЕР ФРЕЗЕР</div>
+                                <div class="logo-text">{this.t('main.companyName')}</div>
                                 <NImage width={80} height={80} src={getImageUrl("icons/777777.png")} class="logo-image"/>
                             </div>
                             <div class="contact-info">
@@ -55,8 +55,22 @@ const MainPage = defineComponent({
                                         <TelegramIcon fillColor="#0088cc" width={24} height={24} />
                                     </div>
                                     <div class="contact-text">
-                                        <div class="contact-label">Telegram</div>
-                                        <div class="contact-value">@deniswasmaked87</div>
+                                        <div class="contact-label">{this.t('main.telegram')}</div>
+                                        <a href="https://t.me/deniswasmaked87" target="_blank" rel="noopener noreferrer" style={{color: '#0088cc', textDecoration: 'none'}}>
+                                            <div class="contact-value">@deniswasmaked87</div>
+                                        </a>
+                                        <div class="contact-value"></div>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <NIcon size={24} class="contact-icon">
+                                        <EmailOutlined></EmailOutlined>
+                                    </NIcon>
+                                    <div class="contact-text">
+                                        <div class="contact-label">{this.t('main.email')}</div>
+                                        <a href="mailto:forsalenn@gmail.com" style={{color: '#0088cc', textDecoration: 'none'}}>
+                                            <div class="contact-value">forsalenn@gmail.com</div>
+                                        </a>
                                         <div class="contact-value"></div>
                                     </div>
                                 </div>
@@ -66,8 +80,8 @@ const MainPage = defineComponent({
                     <div class="main-hero">
                         <div class="hero-background" style={{backgroundImage: `url(${backgroundImage})`}}></div>
                         <div class="hero-content">
-                            <h1 class="hero-title">МИСТЕР ФРЕЗЕР</h1>
-                            <p class="hero-subtitle">Профессиональные услуги по металлообработке</p>
+                            <h1 class="hero-title">{this.t('main.companyName')}</h1>
+                            <p class="hero-subtitle">{this.t('main.heroSubtitle')}</p>
                         </div>
                     </div>
                     <div class="services-section">

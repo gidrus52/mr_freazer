@@ -5,9 +5,10 @@ export type TranslationKey =
   // Navigation
   | 'nav.home' | 'nav.ourServices' | 'nav.ourProducts' | 'nav.login'
   // Main page
-  | 'main.address' | 'main.city' | 'main.workDays' | 'main.workHours' | 'main.phone1' | 'main.phone2'
+  | 'main.companyName' | 'main.heroSubtitle' | 'main.address' | 'main.city' | 'main.workDays' | 'main.workHours' | 'main.phone1' | 'main.phone2'
   | 'main.milling' | 'main.millingDesc' | 'main.turning' | 'main.turningDesc'
   | 'main.welding' | 'main.weldingDesc' | 'main.cutting' | 'main.cuttingDesc'
+  | 'main.telegram' | 'main.email'
   // Production page
   | 'production.stamps.title' | 'production.stamps.description'
   | 'production.pressforms.title' | 'production.pressforms.description'
@@ -28,7 +29,7 @@ export type TranslationKey =
   | 'cabinet.actions' | 'cabinet.logout' | 'cabinet.title' | 'cabinet.profile' | 'cabinet.orders' | 'cabinet.adminPanel'
   | 'cabinet.accessDenied' | 'cabinet.info'
   // App page (Products)
-  | 'app.surron' | 'app.talaria' | 'app.beltDrive' | 'app.suspension'
+  | 'app.companyName' | 'app.surron' | 'app.talaria' | 'app.beltDrive' | 'app.suspension'
   | 'app.surronBelts.description' | 'app.surronSuspension.description' | 'app.contactUs'
   | 'app.form.name' | 'app.form.namePlaceholder' | 'app.form.phone' | 'app.form.comment' | 'app.form.commentPlaceholder'
   | 'app.form.fillAllFields' | 'app.form.success' | 'app.form.error'
@@ -44,6 +45,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'nav.ourProducts': 'Наши товары',
     'nav.login': 'Войти',
     // Main page
+    'main.companyName': 'МИСТЕР ФРЕЗЕР',
+    'main.heroSubtitle': 'Профессиональные услуги по металлообработке',
+    'main.telegram': 'Telegram',
+    'main.email': 'Email',
     'main.address': 'улица Шекспира, 1"Ж"',
     'main.city': 'Нижний Новгород',
     'main.workDays': 'Пн-Пт',
@@ -113,6 +118,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'cabinet.accessDenied': 'Для доступа к личному кабинету необходимо войти в систему.',
     'cabinet.info': 'Здесь вы можете управлять своим профилем и настройками.',
     // App page (Products)
+    'app.companyName': 'Мистер фрезер',
     'app.surron': 'Сууррон',
     'app.talaria': 'Талария',
     'app.beltDrive': 'Ременная передача',
@@ -145,6 +151,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'nav.ourProducts': 'Our Products',
     'nav.login': 'Login',
     // Main page
+    'main.companyName': 'Steel Shift',
+    'main.heroSubtitle': 'Professional metalworking services',
+    'main.telegram': 'Telegram',
+    'main.email': 'Email',
     'main.address': 'Shakespeare Street, 1"Zh"',
     'main.city': 'Nizhny Novgorod',
     'main.workDays': 'Mon-Fri',
@@ -214,6 +224,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'cabinet.accessDenied': 'You need to log in to access your personal cabinet.',
     'cabinet.info': 'Here you can manage your profile and settings.',
     // App page (Products)
+    'app.companyName': 'Steel Shift',
     'app.surron': 'Surron',
     'app.talaria': 'Talaria',
     'app.beltDrive': 'Belt drive',
