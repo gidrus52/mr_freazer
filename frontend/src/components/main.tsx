@@ -50,18 +50,18 @@ const MainPage = defineComponent({
                                         <div class="contact-value">{this.t('main.workHours')}</div>
                                     </div>
                                 </div>
-                                <div class="contact-item">
-                                    <div class="contact-icon" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px'}}>
-                                        <TelegramIcon fillColor="#0088cc" width={24} height={24} />
-                                    </div>
-                                    <div class="contact-text">
-                                        <div class="contact-label">{this.t('main.telegram')}</div>
-                                        <a href="https://t.me/deniswasmaked87" target="_blank" rel="noopener noreferrer" style={{color: '#0088cc', textDecoration: 'none'}}>
+                                <a href="https://t.me/deniswasmaked87" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit', display: 'contents'}}>
+                                    <div class="contact-item" style={{cursor: 'pointer'}}>
+                                        <div class="contact-icon" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px'}}>
+                                            <TelegramIcon fillColor="#0088cc" width={24} height={24} />
+                                        </div>
+                                        <div class="contact-text">
+                                            <div class="contact-label">{this.t('main.telegram')}</div>
                                             <div class="contact-value">@deniswasmaked87</div>
-                                        </a>
-                                        <div class="contact-value"></div>
+                                            <div class="contact-value"></div>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="contact-item">
                                     <NIcon size={24} class="contact-icon">
                                         <EmailOutlined></EmailOutlined>
