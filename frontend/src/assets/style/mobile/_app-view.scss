@@ -5,14 +5,10 @@
 // Основной layout AppView
 .production-layout {
   @include mobile {
-    overflow-y: scroll !important;
+    overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
+    height: auto !important;
     -webkit-overflow-scrolling: touch !important;
-    scroll-snap-type: y mandatory !important;
-    scroll-behavior: smooth !important;
-    position: relative !important;
   }
 }
 
@@ -21,7 +17,6 @@
   @include mobile {
     height: 100vh !important;
     min-height: 100vh !important;
-    max-height: 100vh !important;
     padding: 8px !important;
     flex-direction: column !important;
     gap: 10px !important;
@@ -29,8 +24,6 @@
     align-items: center !important;
     justify-content: center !important;
     overflow: hidden !important;
-    scroll-snap-align: start !important;
-    scroll-snap-stop: always !important;
   }
 }
 
@@ -57,6 +50,7 @@
 .production-layout .app-block span[data-image-container="true"],
 .production-layout .app-block .carousel-container {
   @include mobile {
+    order: 1 !important; // Изображение всегда сверху
     width: var(--mobile-content-width, 400px) !important;
     max-width: var(--mobile-content-width, 400px) !important;
     min-width: var(--mobile-content-width, 400px) !important;
@@ -77,9 +71,9 @@
   > div,
   > span,
   > * {
-    @include mobile {
-      width: 100% !important;
-      max-width: 100% !important;
+  @include mobile {
+    width: 100% !important;
+    max-width: 100% !important;
       min-width: 0 !important;
       height: 100% !important;
       min-height: 100% !important;
@@ -161,6 +155,7 @@
 // Текстовый контент AppView
 .app-content {
   @include mobile {
+    order: 2 !important; // Текст всегда снизу
     width: var(--mobile-content-width, 400px) !important;
     max-width: var(--mobile-content-width, 400px) !important;
     min-width: var(--mobile-content-width, 400px) !important;
@@ -280,38 +275,28 @@
 // Важно: это правило должно быть после импорта production-view для переопределения
 .production-layout .navigation-container {
   @include mobile {
-    // Переопределяем правило из production-view только для AppView
-    // Используем проверку наличия app-block внутри layout
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
-    z-index: 1000 !important;
+    // Скрываем навигацию на мобильных для AppView
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 }
 
-// Специфичное правило для AppView - переопределяет production-view
-// Используем селектор с app-block для большей специфичности
+// Специфичное правило для AppView - скрываем навигацию
 .production-layout:has(.app-block) .navigation-container {
   @include mobile {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
-    z-index: 1000 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 }
 
 // Дополнительное правило для burger-button в AppView
 .production-layout .burger-button {
   @include mobile {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
     width: 44px !important;
     height: 44px !important;
     font-size: 18px !important;
@@ -329,9 +314,9 @@
 // Специфичное правило для burger-button в AppView
 .production-layout:has(.app-block) .burger-button {
   @include mobile {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
     width: 44px !important;
     height: 44px !important;
     font-size: 18px !important;

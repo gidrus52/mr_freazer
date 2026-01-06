@@ -15,11 +15,16 @@ export default defineComponent({
         }
     },
     render() {
+        const isFullScreenPage = this.currentRoute.name === 'Main' || this.currentRoute.name === 'Production' || this.currentRoute.name === 'App'
         return (
-                <NLayout position={'static'} nativeScrollbar={''} style={this.currentRoute.name === 'Main' ? {background: '#1a1a1a', margin: 0, padding: 0} : {marginTop: '9vh'}}>
+                <NLayout position={'static'} nativeScrollbar={''} style={isFullScreenPage ? {background: '#1a1a1a', margin: 0, padding: 0, height: '100vh', overflow: 'hidden'} : {marginTop: '9vh'}}>
                     {/*<div style={this.currentRoute.name == 'Advertisement' ? 'height: 7rem;' : 'height: 0rem;'}></div>*/}
                     {this.currentRoute.name === 'Main' ? (
                         <div style={{height: 'calc(100vh - 9vh)', overflow: 'hidden', margin: 0, padding: 0, background: '#1a1a1a'}} class="main-page-container">
+                            <RouterView/>
+                        </div>
+                    ) : isFullScreenPage ? (
+                        <div style={{height: '100vh', overflow: 'hidden', margin: 0, padding: 0}}>
                             <RouterView/>
                         </div>
                     ) : (

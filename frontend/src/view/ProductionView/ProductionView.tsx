@@ -51,7 +51,7 @@ const ProductionView = defineComponent({
         setup() {
             const { t } = useTranslation()
             const languageStore = useLanguageStore()
-            const sections = ['topBlock', 'nextBlock_1', 'nextBlock_2', 'nextBlock_3']
+            const sections = ['nextBlock_4', 'topBlock', 'nextBlock_1', 'nextBlock_2', 'nextBlock_3']
             let currentIndex = 0
             let lastScrollTime = 0
             const SCROLL_DELAY = 500 // 500ms delay
@@ -72,7 +72,8 @@ const ProductionView = defineComponent({
                 topBlock: 0,
                 nextBlock_1: 0,
                 nextBlock_2: 0,
-                nextBlock_3: 0
+                nextBlock_3: 0,
+                nextBlock_4: 0
             })
 
             // Состояние для навигации
@@ -133,6 +134,7 @@ const ProductionView = defineComponent({
                 startAutoScroll('nextBlock_1')
                 startAutoScroll('nextBlock_2')
                 startAutoScroll('nextBlock_3')
+                startAutoScroll('nextBlock_4')
             })
 
             // Останавливаем автопрокрутку при размонтировании
@@ -143,6 +145,7 @@ const ProductionView = defineComponent({
                 stopAutoScroll('nextBlock_1')
                 stopAutoScroll('nextBlock_2')
                 stopAutoScroll('nextBlock_3')
+                stopAutoScroll('nextBlock_4')
             })
 
             // Массивы изображений для каждого блока
@@ -167,6 +170,9 @@ const ProductionView = defineComponent({
                 nextBlock_3: [
                     getImageUrl("productionpage/Brake/1.png"),
                     getImageUrl("productionpage/Brake/2.png")
+                ],
+                nextBlock_4: [
+                    getImageUrl("productionpage/Common_/common_1.png")
                 ]
             }
 
@@ -511,6 +517,12 @@ Email: forsalenn@gmail.com
                             <div class="navigation-menu">
                                 <div class="navigation-buttons">
                                     <NButton
+                                        onClick={() => this.navigateToBlock('nextBlock_4')}
+                                        class="navigation-button"
+                                    >
+                                        {this.t('production.nav.milling')}
+                                    </NButton>
+                                    <NButton
                                         onClick={() => this.navigateToBlock('topBlock')}
                                         class="navigation-button"
                                     >
@@ -538,8 +550,101 @@ Email: forsalenn@gmail.com
                             </div>
                         )}
                     </div>
+                    <NLayout id="nextBlock_4" class="production-block next-block-4">
+                        <NFlex class="production-flex">
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_4')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <img
+                                    src={this.getCurrentImage('nextBlock_4')}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('production.milling.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_4')}
+                                />
+                            </NSpace>
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                        {this.t('production.milling.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.milling.description')}
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
+                        </NFlex>
+                    </NLayout>
                     <NLayout id="topBlock" class="production-block top-block">
                         <NFlex class="production-flex">
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                    {this.t('production.stamps.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.stamps.description')}</p>
+                                        <p class="production-description">
+                                            
+                                        </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
                             <NSpace 
                                 class="carousel-container"
                                 data-image-container="true"
@@ -572,35 +677,6 @@ Email: forsalenn@gmail.com
                                     alt={this.t('production.stamps.title')}
                                     onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'topBlock')}
                                 />
-                            </NSpace>
-                            <NSpace class="production-content">
-                                <div class="production-text">
-                                    <div class="production-title">
-                                    {this.t('production.stamps.title')}
-                                    </div>
-                                    <p class="production-description">
-                                        {this.t('production.stamps.description')}</p>
-                                        <p class="production-description">
-                                            
-                                        </p>
-                                    <NButton 
-                                        type="default" 
-                                        size="large"
-                                        onClick={this.openModal}
-                                        class="contact-button"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto'
-                                        }}
-                                    >
-                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                            <LocalPhoneRound></LocalPhoneRound>
-                                        </NIcon>
-                                        {this.t('production.contactUs')}
-                                    </NButton>
-                                </div>
                             </NSpace>
                         </NFlex>
                     </NLayout>
@@ -670,6 +746,33 @@ Email: forsalenn@gmail.com
                     </NLayout>
                     <NLayout id="nextBlock_2" class="production-block next-block-2">
                         <NFlex class="production-flex">
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                        {this.t('production.chain.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.chain.description')}
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
                             <NSpace 
                                 class="carousel-container"
                                 data-image-container="true"
@@ -702,33 +805,6 @@ Email: forsalenn@gmail.com
                                     alt={this.t('production.chain.title')}
                                     onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')}
                                 />
-                            </NSpace>
-                            <NSpace class="production-content">
-                                <div class="production-text">
-                                    <div class="production-title">
-                                        {this.t('production.chain.title')}
-                                    </div>
-                                    <p class="production-description">
-                                        {this.t('production.chain.description')}
-                                    </p>
-                                    <NButton 
-                                        type="default" 
-                                        size="large"
-                                        onClick={this.openModal}
-                                        class="contact-button"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto'
-                                        }}
-                                    >
-                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                            <LocalPhoneRound></LocalPhoneRound>
-                                        </NIcon>
-                                        {this.t('production.contactUs')}
-                                    </NButton>
-                                </div>
                             </NSpace>
                         </NFlex>
                     </NLayout>

@@ -15,8 +15,9 @@ export type TranslationKey =
   | 'production.brake.title' | 'production.brake.description'
   | 'production.belt.title' | 'production.belt.description'
   | 'production.chain.title' | 'production.chain.description'
+  | 'production.milling.title' | 'production.milling.description'
   | 'production.orderButton' | 'production.contactUs'
-  | 'production.nav.bodies' | 'production.nav.belts' | 'production.nav.chains' | 'production.nav.brake'
+  | 'production.nav.bodies' | 'production.nav.belts' | 'production.nav.chains' | 'production.nav.brake' | 'production.nav.milling'
   // Login page
   | 'login.welcome' | 'login.tabLogin' | 'login.tabRegister' | 'login.email' | 'login.password'
   | 'login.emailPlaceholder' | 'login.passwordPlaceholder' | 'login.loginButton' | 'login.registerButton'
@@ -58,7 +59,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'main.cutting': 'Распил металла',
     'main.cuttingDesc': 'Черные и цветные металлы',
     // Production page
-    'production.stamps.title': 'Штампы. Пресформы. Корпуса. Фрезерная и токарная обработки',
+    'production.stamps.title': 'Штампы. Пресформы. Корпуса. ',
     'production.stamps.description': 'Профессиональные услуги по изготовлению корпусов из конструкционных, инструментальных сталей, а также алюминия на современных станках. Фрезерная и токарная обработки общего назначения',
     'production.pressforms.title': 'Пресформы',
     'production.pressforms.description': 'Изготовление пресформ для различных отраслей промышленности.',
@@ -70,12 +71,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'production.belt.description': 'Современное оборудование и высококвалифицированные специалисты. Ременные передачи для приводов конвейеров, станков, электромотоциклов, мотоциклов с двс.',
     'production.chain.title': 'Цепные передачи',
     'production.chain.description': 'Современное оборудование и высококвалифицированные специалисты. Цепные передачи для приводов конвейеров, станков, электромотоциклов, мотоциклов с двс. Увеличенные и нестандартные звезды для стантрайдинга.',
+    'production.milling.title': 'Фрезерная и токарная обработки',
+    'production.milling.description': 'Фрезерная и токарная обработки общего назначения. Плсастик и металлы',
     'production.orderButton': 'Заказать',
     'production.contactUs': 'Свяжитесь с нами',
     'production.nav.bodies': 'Корпуса и пресс-формы',
     'production.nav.belts': 'Ременные передачи',
     'production.nav.chains': 'Цепные передачи',
     'production.nav.brake': 'Тормозная система',
+    'production.nav.milling': 'Фрезерная и токарная обработки',
     // Login page
     'login.welcome': 'Добро пожаловать',
     'login.tabLogin': 'Вход',
@@ -168,12 +172,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'production.belt.description': 'Modern equipment and highly qualified specialists. Belt drives for conveyors, machine tools, electric motorcycles, motorcycles with internal combustion engines.',
     'production.chain.title': 'Chain drives',
     'production.chain.description': 'Modern equipment and highly qualified specialists. Chain drives for conveyors, machine tools, electric motorcycles, motorcycles with internal combustion engines. Enlarged and non-standard sprockets for stunt riding.',
+    'production.milling.title': 'Milling and turning',
+    'production.milling.description': 'General purpose milling and turning',
     'production.orderButton': 'Order',
     'production.contactUs': 'Contact us',
     'production.nav.bodies': 'Bodies and pressforms',
     'production.nav.belts': 'Belt drives',
     'production.nav.chains': 'Chain drives',
     'production.nav.brake': 'Brake system',
+    'production.nav.milling': 'Milling and turning',
     // Login page
     'login.welcome': 'Welcome',
     'login.tabLogin': 'Login',

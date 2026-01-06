@@ -762,30 +762,30 @@ const AppView = defineComponent({
                     {/* Первая секция - Ременная передача */}
                     <NLayout id="surron-belts" class="app-block top-block">
                         <NFlex class="app-flex">
-                            <NSpace 
+                                        <NSpace
                                 class="carousel-container"
-                                data-image-container="true"
+                                            data-image-container="true"
                                 onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-belts')}
-                                style={{
-                                    width: '600px',
-                                    height: '600px',
-                                    minWidth: '600px',
-                                    maxWidth: '600px',
-                                    minHeight: '600px',
-                                    maxHeight: '600px',
+                                            style={{
+                                                width: '600px',
+                                                height: '600px',
+                                                minWidth: '600px',
+                                                maxWidth: '600px',
+                                                minHeight: '600px',
+                                                maxHeight: '600px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    flexShrink: 0
-                                }}
-                            >
+                                                position: 'relative',
+                                                overflow: 'hidden',
+                                                flexShrink: 0
+                                            }}
+                                        >
                                 <img
                                     src={this.getCurrentImage('surron-belts')}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
                                         maxWidth: '100%',
                                         maxHeight: '100%',
                                         objectFit: 'contain',
@@ -839,34 +839,34 @@ const AppView = defineComponent({
                                 style={{
                                     width: '600px',
                                     height: '600px',
-                                    minWidth: '600px',
+                                                    minWidth: '600px',
                                     maxWidth: '600px',
-                                    minHeight: '600px',
+                                                    minHeight: '600px',
                                     maxHeight: '600px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
                                     position: 'relative',
-                                    overflow: 'hidden',
+                                                    overflow: 'hidden',
                                     flexShrink: 0
-                                }}
-                            >
-                                <img
+                                                }}
+                                            >
+                                                <img 
                                     src={this.getCurrentImage('surron-suspension')}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        maxWidth: '100%',
-                                        maxHeight: '100%',
-                                        objectFit: 'contain',
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        maxWidth: '100%',
+                                                        maxHeight: '100%',
+                                                        objectFit: 'contain',
                                         display: 'block'
-                                    }}
+                                                    }}
                                     alt={this.t('app.suspension')}
                                     onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
                                     onTouchstart={(e: TouchEvent) => this.handleTouchStart(e, 'surron-suspension')}
                                     onTouchend={(e: TouchEvent) => this.handleTouchEnd(e, 'surron-suspension')}
-                                />
-                            </NSpace>
+                                                />
+                                            </NSpace>
                             <NSpace class="app-content">
                                 <div class="app-text">
                                     <div class="app-title">
@@ -875,27 +875,27 @@ const AppView = defineComponent({
                                     <p class="app-description">
                                         {this.t('app.surronSuspension.description')}
                                     </p>
-                                    <NButton 
-                                        type="default" 
-                                        size="large"
-                                        onClick={this.openModal}
+                                                <NButton 
+                                                    type="default" 
+                                                    size="large"
+                                                    onClick={this.openModal}
                                         class="app-contact-button"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto'
-                                        }}
-                                    >
-                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                            <LocalPhoneRound></LocalPhoneRound>
-                                        </NIcon>
-                                        {this.t('app.contactUs')}
-                                    </NButton>
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        margin: '0 auto'
+                                                    }}
+                                                >
+                                                    <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                                        <LocalPhoneRound></LocalPhoneRound>
+                                                    </NIcon>
+                                                    {this.t('app.contactUs')}
+                                                </NButton>
                                 </div>
-                            </NSpace>
-                        </NFlex>
-                    </NLayout>
+                                        </NSpace>
+                                    </NFlex>
+                                </NLayout>
                         
                     {/* Модальное окно с формой */}
                         <NModal

@@ -14,6 +14,10 @@ export default defineConfig({
       // options are passed on to @vue/babel-plugin-jsx
     }),
   ],
+  // Определение feature flags для Vue
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+  },
   // Настройка для статических файлов
   publicDir: 'public',
   build: {
