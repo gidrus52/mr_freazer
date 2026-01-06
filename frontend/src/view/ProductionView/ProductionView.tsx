@@ -378,6 +378,12 @@ const ProductionView = defineComponent({
                     return
                 }
 
+                // Проверка комментария
+                if (!formData.value.comment.trim()) {
+                    message.error(t('app.form.commentRequired'))
+                    return
+                }
+
                 loading.value = true
 
                 try {
@@ -934,11 +940,11 @@ Email: forsalenn@gmail.com
                                 </NFlex>
                             </NFormItem>
                             
-                            <NFormItem label={this.t('app.form.comment')} path="comment">
+                            <NFormItem label={this.t('app.form.comment')} path="comment" rule={{ required: true, message: this.t('app.form.commentRequired') }}>
                                 <NInput
                                     value={this.formData.comment}
                                     onUpdateValue={(value: string) => this.formData.comment = value}
-                                    placeholder="Опишите ваш запрос (необязательно)"
+                                    placeholder={this.t('app.form.commentPlaceholder')}
                                     size="large"
                                     type="textarea"
                                     rows={3}

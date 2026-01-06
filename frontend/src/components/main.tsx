@@ -1,13 +1,28 @@
 import {NScrollbar, NPageHeader, NGridItem, NGrid, NIcon, NImage, NFlex} from 'naive-ui'
 import {LocationOnOutlined, LocalPhoneRound, AccessTimeFilled, ExpandCircleDownOutlined, EmailOutlined} from '@vicons/material'
-import {defineComponent,  ref, computed} from "vue";
+import {defineComponent,  ref, computed, h} from "vue";
 import {useTemplateRef} from "vue";
 
 import MilingIcon from "../assets/img/icons/milling";
-import TelegramIcon from "../assets/img/icons/telegramIcon";
 import backgroundImage from "../assets/img/background/back_01.jpg";
 import { getImageUrl } from "../utils/imageUtils";
 import { useTranslation } from "../utils/translations";
+
+// Компонент иконки Telegram, аналогичный EmailOutlined
+const TelegramOutlined = defineComponent({
+    name: 'TelegramOutlined',
+    render() {
+        return h('svg', {
+            viewBox: '0 0 48 48',
+            fill: 'currentColor',
+            xmlns: 'http://www.w3.org/2000/svg'
+        }, [
+            h('path', {
+                d: 'M40.83,8.48c1.14,0,2,1,1.54,2.86l-5.58,26.3c-.39,1.87-1.52,2.32-3.08,1.45L20.4,29.26a.4.4,0,0,1,0-.65L35.77,14.73c.7-.62-.15-.92-1.07-.36L15.41,26.54a.46.46,0,0,1-.4.05L6.82,24C5,23.47,5,22.22,7.23,21.33L40,8.69a2.16,2.16,0,0,1,.83-.21Z'
+            })
+        ])
+    }
+})
 
 
 const MainPage = defineComponent({
@@ -52,28 +67,28 @@ const MainPage = defineComponent({
                                 </div>
                                 <a href="https://t.me/deniswasmaked87" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit', display: 'contents'}}>
                                     <div class="contact-item" style={{cursor: 'pointer'}}>
-                                        <div class="contact-icon" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px'}}>
-                                            <TelegramIcon fillColor="#0088cc" width={24} height={24} />
-                                        </div>
+                                        <NIcon size={24} class="contact-icon">
+                                            <TelegramOutlined></TelegramOutlined>
+                                        </NIcon>
                                         <div class="contact-text">
                                             <div class="contact-label">{this.t('main.telegram')}</div>
-                                            <div class="contact-value">@deniswasmaked87</div>
+                                            <div class="contact-value"></div>
                                             <div class="contact-value"></div>
                                         </div>
                                     </div>
                                 </a>
-                                <div class="contact-item">
-                                    <NIcon size={24} class="contact-icon">
-                                        <EmailOutlined></EmailOutlined>
-                                    </NIcon>
-                                    <div class="contact-text">
-                                        <div class="contact-label">{this.t('main.email')}</div>
-                                        <a href="mailto:forsalenn@gmail.com" style={{color: '#0088cc', textDecoration: 'none'}}>
-                                            <div class="contact-value">forsalenn@gmail.com</div>
-                                        </a>
-                                        <div class="contact-value"></div>
+                                <a href="mailto:forsalenn@gmail.com" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit', display: 'contents'}}>
+                                    <div class="contact-item" style={{cursor: 'pointer'}}>
+                                        <NIcon size={24} class="contact-icon">
+                                            <EmailOutlined></EmailOutlined>
+                                        </NIcon>
+                                        <div class="contact-text">
+                                            <div class="contact-label">{this.t('main.email')}</div>
+                                            <div class="contact-value" style={{opacity: 0.1, fontSize: '1px'}}>forsalenn@gmail.com</div>
+                                            <div class="contact-value"></div>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>

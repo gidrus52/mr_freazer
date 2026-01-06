@@ -959,7 +959,7 @@ const AppView = defineComponent({
                                     </NFlex>
                                 </NFormItem>
                                 
-                                <NFormItem label="Комментарий" path="comment">
+                                <NFormItem label="Комментарий" path="comment" rule={{ required: true, message: this.t('app.form.commentRequired') }}>
                                     <NInput
                                         value={this.formData.comment}
                                         onUpdateValue={(value: string) => this.formData.comment = value}
