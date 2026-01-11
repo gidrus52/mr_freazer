@@ -48,8 +48,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy built frontend from builder
 COPY --from=frontend-builder /app/dist /usr/share/nginx/html
 
-# Expose port 80
-EXPOSE 80
+# Expose ports 80 (HTTP) and 443 (HTTPS)
+EXPOSE 80 443
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
