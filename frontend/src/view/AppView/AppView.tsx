@@ -13,11 +13,12 @@ import {
     NIcon,
     useMessage
 } from 'naive-ui'
-import {defineComponent, ref, computed, watch} from "vue";
+import {defineComponent, ref, computed, watch, onMounted, onUnmounted} from "vue";
 import { LocalPhoneRound } from '@vicons/material'
 import { useTranslation } from "../../utils/translations";
 import { useLanguageStore } from "../../stores/languageStore";
 import { countries, defaultCountry, type Country } from "../../utils/countries";
+import { getImageUrl } from "../../utils/imageUtils";
 
 // Типы для EmailJS
 declare global {
@@ -73,15 +74,15 @@ const AppView = defineComponent({
                 const isEnglish = languageStore.currentLanguage === 'en'
                 return {
                     'surron-belts': [
-                        "src/assets/img/apppage/beltkit/2.jpg",
-                        "src/assets/img/apppage/beltkit/1.jpg",
-                        "src/assets/img/apppage/beltkit/3.jpg"
+                        getImageUrl("apppage/beltkit/2.jpg"),
+                        getImageUrl("apppage/beltkit/1.jpg"),
+                        getImageUrl("apppage/beltkit/3.jpg")
                     ],
                     'surron-suspension': [
-                        "src/assets/img/apppage/mayatnik/1.png",
-                        isEnglish ? "src/assets/img/apppage/mayatnik/2_en.png" : "src/assets/img/apppage/mayatnik/2.png",
-                        "src/assets/img/apppage/mayatnik/3.png",
-                        "src/assets/img/apppage/mayatnik/4.png"
+                        getImageUrl("apppage/mayatnik/1.png"),
+                        isEnglish ? getImageUrl("apppage/mayatnik/2_en.png") : getImageUrl("apppage/mayatnik/2.png"),
+                        getImageUrl("apppage/mayatnik/3.png"),
+                        getImageUrl("apppage/mayatnik/4.png")
                     ]
                 }
             })
@@ -116,6 +117,29 @@ const AppView = defineComponent({
             let lastImageScrollTime = 0
             const IMAGE_SCROLL_DELAY = 300 // 300ms delay для переключения картинок
 
+            // Автопрокрутка изображений
+            let autoScrollIntervals: { [key: string]: number } = {}
+            const AUTO_SCROLL_INTERVAL = 3000 // 3 секунды
+
+            const startAutoScroll = (subCategoryKey: string) => {
+                // Останавливаем предыдущий интервал, если есть
+                if (autoScrollIntervals[subCategoryKey]) {
+                    clearInterval(autoScrollIntervals[subCategoryKey])
+                }
+                
+                // Запускаем новый интервал
+                autoScrollIntervals[subCategoryKey] = setInterval(() => {
+                    nextImage(subCategoryKey)
+                }, AUTO_SCROLL_INTERVAL) as unknown as number
+            }
+
+            const stopAutoScroll = (subCategoryKey: string) => {
+                if (autoScrollIntervals[subCategoryKey]) {
+                    clearInterval(autoScrollIntervals[subCategoryKey])
+                    delete autoScrollIntervals[subCategoryKey]
+                }
+            }
+
             // Обработчик скролла для переключения картинок
             const handleImageWheel = (event: WheelEvent, subCategoryKey: string) => {
                 event.preventDefault()
@@ -134,6 +158,46 @@ const AppView = defineComponent({
                 } else if (event.deltaY < 0) { // Scrolling up - предыдущая картинка
                     prevImage(subCategoryKey)
                 }
+            }
+
+            // Обработка тача для мобильных устройств
+            let touchStartX = 0
+            let touchStartY = 0
+            const SWIPE_THRESHOLD = 50 // Минимальное расстояние для свайпа
+
+            const handleTouchStart = (event: TouchEvent, subCategoryKey: string) => {
+                touchStartX = event.touches[0].clientX
+                touchStartY = event.touches[0].clientY
+                // Останавливаем автопрокрутку при начале тача
+                stopAutoScroll(subCategoryKey)
+            }
+
+            const handleTouchEnd = (event: TouchEvent, subCategoryKey: string) => {
+                if (!touchStartX || !touchStartY) return
+                
+                const touchEndX = event.changedTouches[0].clientX
+                const touchEndY = event.changedTouches[0].clientY
+                
+                const deltaX = touchEndX - touchStartX
+                const deltaY = touchEndY - touchStartY
+                
+                // Проверяем, что это горизонтальный свайп (не вертикальный скролл)
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+                    if (deltaX > 0) {
+                        // Свайп вправо - предыдущее изображение
+                        prevImage(subCategoryKey)
+                    } else {
+                        // Свайп влево - следующее изображение
+                        nextImage(subCategoryKey)
+                    }
+                }
+                
+                // Сбрасываем координаты
+                touchStartX = 0
+                touchStartY = 0
+                
+                // Перезапускаем автопрокрутку
+                startAutoScroll(subCategoryKey)
             }
             
             // Категории для меню - используем computed для реактивности переводов
@@ -182,10 +246,10 @@ const AppView = defineComponent({
                 // Устанавливаем выбранную категорию
                 selectedCategory.value = categoryKey
                 
-                // Небольшая задержка, чтобы subCategories обновились
+                // Небольшая задержка для плавной прокрутки
                 setTimeout(() => {
                     // Находим индекс выбранной подкатегории
-                    const sectionKeys = subCategories.value.map(sub => sub.key)
+                    const sectionKeys = ['surron-belts', 'surron-suspension']
                     const sectionIndex = sectionKeys.indexOf(subCategoryKey)
                     
                     if (sectionIndex !== -1) {
@@ -210,9 +274,8 @@ const AppView = defineComponent({
                 if (firstCategoryWithSubmenu) {
                     selectedCategory.value = firstCategoryWithSubmenu.key
                     // Устанавливаем первую подкатегорию как текущую
-                    if (firstCategoryWithSubmenu.submenu && firstCategoryWithSubmenu.submenu.length > 0) {
-                        currentSubCategoryKey.value = firstCategoryWithSubmenu.submenu[0].key
-                    }
+                    currentSubCategoryKey.value = 'surron-belts'
+                    currentSectionIndex = 0
                 }
             }
 
@@ -245,8 +308,50 @@ const AppView = defineComponent({
 
             // Получаем ключи секций для навигации
             const getSectionKeys = () => {
-                return subCategories.value.map(sub => sub.key)
+                return ['surron-belts', 'surron-suspension']
             }
+
+            // Динамическое определение размеров экрана для мобильных устройств
+            const updateScreenDimensions = () => {
+                if (typeof window !== 'undefined') {
+                    const width = window.innerWidth
+                    const height = window.innerHeight
+                    const isMobile = width <= 768 // Мобильное устройство
+                    
+                    if (isMobile) {
+                        // Устанавливаем CSS переменные для размеров экрана
+                        document.documentElement.style.setProperty('--mobile-screen-width', `${width}px`)
+                        document.documentElement.style.setProperty('--mobile-screen-height', `${height}px`)
+                        // Ширина контента - немного меньше ширины экрана для отступов
+                        const contentWidth = Math.min(width - 20, 400) // Максимум 400px, но не больше ширины экрана минус отступы
+                        document.documentElement.style.setProperty('--mobile-content-width', `${contentWidth}px`)
+                    } else {
+                        // Для десктопа сбрасываем переменные
+                        document.documentElement.style.setProperty('--mobile-screen-width', 'auto')
+                        document.documentElement.style.setProperty('--mobile-screen-height', 'auto')
+                        document.documentElement.style.setProperty('--mobile-content-width', 'auto')
+                    }
+                }
+            }
+
+            // Инициализация размеров при монтировании
+            onMounted(() => {
+                updateScreenDimensions()
+                window.addEventListener('resize', updateScreenDimensions)
+                window.addEventListener('orientationchange', updateScreenDimensions)
+                // Запускаем автопрокрутку для всех секций
+                startAutoScroll('surron-belts')
+                startAutoScroll('surron-suspension')
+            })
+
+            // Очистка при размонтировании
+            onUnmounted(() => {
+                window.removeEventListener('resize', updateScreenDimensions)
+                window.removeEventListener('orientationchange', updateScreenDimensions)
+                // Останавливаем автопрокрутку
+                stopAutoScroll('surron-belts')
+                stopAutoScroll('surron-suspension')
+            })
 
             // Прокрутка к секции по индексу
             const scrollToSection = (index: number): void => {
@@ -270,7 +375,8 @@ const AppView = defineComponent({
 
             // Обработчик скролла для навигации по секциям
             const handleWheel = (event: WheelEvent): void => {
-                if (subCategories.value.length === 0) return
+                const sectionKeys = ['surron-belts', 'surron-suspension']
+                if (sectionKeys.length === 0) return
                 
                 // Проверяем, не пришло ли событие из области изображения
                 const target = event.target as HTMLElement
@@ -298,18 +404,16 @@ const AppView = defineComponent({
                 lastScrollTime = now
 
                 // Переключение между секциями при скролле
-                if (event.deltaY > 0 && currentSectionIndex < subCategories.value.length - 1) { // Scrolling down
+                if (event.deltaY > 0 && currentSectionIndex < sectionKeys.length - 1) { // Scrolling down
                     currentSectionIndex = currentSectionIndex + 1
-                    const sections = getSectionKeys()
-                    if (sections[currentSectionIndex]) {
-                        currentSubCategoryKey.value = sections[currentSectionIndex]
+                    if (sectionKeys[currentSectionIndex]) {
+                        currentSubCategoryKey.value = sectionKeys[currentSectionIndex]
                     }
                     scrollToSection(currentSectionIndex)
                 } else if (event.deltaY < 0 && currentSectionIndex > 0) { // Scrolling up
                     currentSectionIndex = currentSectionIndex - 1
-                    const sections = getSectionKeys()
-                    if (sections[currentSectionIndex]) {
-                        currentSubCategoryKey.value = sections[currentSectionIndex]
+                    if (sectionKeys[currentSectionIndex]) {
+                        currentSubCategoryKey.value = sectionKeys[currentSectionIndex]
                     }
                     scrollToSection(currentSectionIndex)
                 }
@@ -518,6 +622,10 @@ const AppView = defineComponent({
                 prevImage,
                 getCurrentImage,
                 handleImageWheel,
+                handleTouchStart,
+                handleTouchEnd,
+                startAutoScroll,
+                stopAutoScroll,
                 t,
                 openModal,
                 closeModal,
@@ -651,124 +759,128 @@ const AppView = defineComponent({
                             </NSpace>
                         )}
                     </NSpace>
-                        {this.subCategories.length > 0 ? (
-                            // Отображение секций для каждой подкатегории
-                            this.subCategories.map((subCategory, index) => (
-                                <NLayout 
-                                    key={subCategory.key}
-                                    id={subCategory.key}
-                                    style={{
-                                        background: this.getSectionColor(index),
-                                        height: '100vh',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        overflow: 'hidden'
-                                    }}
-                                >
-                                    <NFlex style={{
-                                        maxWidth: '1400px',
-                                        width: '100%',
-                                        height: '100%',
-                                        padding: '0 20px',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '40px',
-                                        overflow: 'hidden',
-                                        boxSizing: 'border-box',
-                                        flexWrap: 'nowrap'
-                                    }}>
-                                        {/* Изображение слева */}
+                    {/* Первая секция - Ременная передача */}
+                    <NLayout id="surron-belts" class="app-block top-block">
+                        <NFlex class="app-flex">
                                         <NSpace
+                                class="carousel-container"
                                             data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-belts')}
                                             style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
                                                 width: '600px',
                                                 height: '600px',
                                                 minWidth: '600px',
                                                 maxWidth: '600px',
                                                 minHeight: '600px',
                                                 maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
                                                 position: 'relative',
                                                 overflow: 'hidden',
                                                 flexShrink: 0
                                             }}
                                         >
-                                            <NSpace
+                                <img
+                                    src={this.getCurrentImage('surron-belts')}
                                                 style={{
                                                     width: '100%',
                                                     height: '100%',
-                                                    maxWidth: '600px',
-                                                    maxHeight: '600px',
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('app.beltDrive')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-belts')}
+                                />
+                            </NSpace>
+                            <NSpace class="app-content">
+                                <div class="app-text">
+                                    <div class="app-title">
+                                        {this.t('app.beltDrive')}
+                                    </div>
+                                    <p class="app-description">
+                                        {this.t('app.surronBelts.description')}
+                                    </p>
+                                    <p class="app-description">
+                                        
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="app-contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('app.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
+                        </NFlex>
+                    </NLayout>
+                    {/* Вторая секция - Подвеска */}
+                    <NLayout id="surron-suspension" class="app-block next-block-1">
+                        <NFlex class="app-flex">
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
+                                onTouchstart={(e: TouchEvent) => this.handleTouchStart(e, 'surron-suspension')}
+                                onTouchend={(e: TouchEvent) => this.handleTouchEnd(e, 'surron-suspension')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
                                                     minWidth: '600px',
+                                    maxWidth: '600px',
                                                     minHeight: '600px',
+                                    maxHeight: '600px',
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
+                                    position: 'relative',
                                                     overflow: 'hidden',
-                                                    position: 'relative'
+                                    flexShrink: 0
                                                 }}
-                                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, subCategory.key)}
                                             >
                                                 <img 
-                                                    src={this.getCurrentImage(subCategory.key)} 
+                                    src={this.getCurrentImage('surron-suspension')}
                                                     style={{
                                                         width: '100%',
                                                         height: '100%',
                                                         maxWidth: '100%',
                                                         maxHeight: '100%',
                                                         objectFit: 'contain',
-                                                        display: 'block',
-                                                        margin: 'auto'
+                                        display: 'block'
                                                     }}
-                                                    alt={subCategory.label}
+                                    alt={this.t('app.suspension')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'surron-suspension')}
+                                    onTouchstart={(e: TouchEvent) => this.handleTouchStart(e, 'surron-suspension')}
+                                    onTouchend={(e: TouchEvent) => this.handleTouchEnd(e, 'surron-suspension')}
                                                 />
                                             </NSpace>
-                                        </NSpace>
-                                        
-                                        {/* Текст справа */}
-                                        <NSpace style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            flex: 1,
-                                            height: '100%'
-                                        }}>
-                                            <NSpace vertical style={{
-                                                textAlign: 'center',
-                                                color: '#e0e0e0',
-                                                lineHeight: '1.6'
-                                            }}>
-                                                <NText style={{
-                                                    fontSize: '32px',
-                                                    fontWeight: 'bold',
-                                                    color: '#4dabf7',
-                                                    marginBottom: '20px',
-                                                    display: 'block'
-                                                }}>
-                                                    {subCategory.label}
-                                                </NText>
-                                                <NText style={{fontSize: '18px', marginBottom: '30px', display: 'block', whiteSpace: 'pre-line'}}>
-                                                    {subCategory.key === 'surron-belts' 
-                                                        ? this.t('app.surronBelts.description')
-                                                        : this.t('app.surronSuspension.description')
-                                                    }
-                                                </NText>
+                            <NSpace class="app-content">
+                                <div class="app-text">
+                                    <div class="app-title">
+                                        {this.t('app.suspension')}
+                                    </div>
+                                    <p class="app-description">
+                                        {this.t('app.surronSuspension.description')}
+                                    </p>
                                                 <NButton 
                                                     type="default" 
                                                     size="large"
                                                     onClick={this.openModal}
+                                        class="app-contact-button"
                                                     style={{
-                                                        fontSize: '18px',
-                                                        padding: '12px 30px',
-                                                        borderRadius: '8px',
-                                                        fontWeight: 'bold',
-                                                        backgroundColor: '#1a1a1a',
-                                                        border: '2px solid #404040',
-                                                        color: '#ffffff',
-                                                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'center',
@@ -780,12 +892,10 @@ const AppView = defineComponent({
                                                     </NIcon>
                                                     {this.t('app.contactUs')}
                                                 </NButton>
-                                            </NSpace>
+                                </div>
                                         </NSpace>
                                     </NFlex>
                                 </NLayout>
-                            ))
-                        ) : null}
                         
                     {/* Модальное окно с формой */}
                         <NModal
@@ -849,7 +959,7 @@ const AppView = defineComponent({
                                     </NFlex>
                                 </NFormItem>
                                 
-                                <NFormItem label="Комментарий" path="comment">
+                                <NFormItem label="Комментарий" path="comment" rule={{ required: true, message: this.t('app.form.commentRequired') }}>
                                     <NInput
                                         value={this.formData.comment}
                                         onUpdateValue={(value: string) => this.formData.comment = value}

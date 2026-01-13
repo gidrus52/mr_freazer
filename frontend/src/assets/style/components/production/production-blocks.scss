@@ -2,6 +2,11 @@
 .production-layout {
   overflow: hidden;
   height: 100vh;
+  
+  @media (max-width: 768px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 .production-block {
@@ -26,6 +31,18 @@
   &.next-block-3 {
     background: #2d2d2d;
   }
+
+  &.next-block-4 {
+    background: #1a1a1a;
+  }
+  
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 100vh;
+    padding: 15px;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 .production-flex {
@@ -34,6 +51,15 @@
   height: 100%;
   padding: 0 20px;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 15px;
+    max-width: 100%;
+  }
 }
 
 .production-content {
@@ -43,6 +69,12 @@
   flex: 1;
   height: 100%;
   position: relative;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+  }
 }
 
 .production-text {
@@ -56,12 +88,31 @@
   font-weight: bold;
   color: #4dabf7;
   margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 }
 
 .production-description {
   font-size: 18px;
   margin-bottom: 30px;
   max-width: 600px;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
 }
 
 .contact-button {
@@ -81,6 +132,14 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+    margin: 10px auto;
+  }
 }
 
 .production-image-container {
@@ -90,6 +149,20 @@
   flex: 1;
   height: 100%;
   position: relative;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 300px;
+    max-height: 400px;
+    aspect-ratio: 1;
+  }
+  
+  @media (max-width: 480px) {
+    min-height: 250px;
+    max-height: 300px;
+  }
 }
 
 .production-image {
@@ -97,4 +170,137 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   max-height: 600px;
   object-fit: contain;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-height: 400px;
+  }
+  
+  @media (max-width: 480px) {
+    max-height: 300px;
+  }
+}
+
+// Стили для AppView (аналогично ProductionView)
+.app-block {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &.top-block {
+    background: #1a1a1a;
+  }
+
+  &.next-block-1 {
+    background: #2d2d2d;
+  }
+  
+  @media (max-width: 768px) {
+    height: 100vh;
+    min-height: 100vh;
+    padding: 15px;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.app-flex {
+  max-width: 1400px;
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 15px;
+    max-width: 100%;
+  }
+}
+
+.app-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+  }
+}
+
+.app-text {
+  text-align: center;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+.app-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #4dabf7;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
+}
+
+.app-description {
+  font-size: 18px;
+  margin-bottom: 30px;
+  max-width: 600px;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
+}
+
+.app-contact-button {
+  background-color: #000000;
+  border: 2px solid #000000;
+  color: #ffffff;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #333333;
+    border-color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+    margin: 10px auto;
+  }
 }

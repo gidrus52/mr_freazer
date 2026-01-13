@@ -1,0 +1,296 @@
+// Улучшенные стили для ProductionView
+
+@import './variables';
+@import './mixins';
+
+// Мобильные миксины
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin mobile-small {
+  @media (max-width: 424px) {
+    @content;
+  }
+}
+
+.production-view {
+  min-height: 100vh;
+  background: $bg-primary;
+  position: relative;
+}
+
+// Блоки продукции
+.production-block {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-3xl $spacing-lg;
+  position: relative;
+  overflow: hidden;
+  
+  @include mobile {
+    min-height: auto;
+    padding: $spacing-xl $spacing-md;
+    flex-direction: column;
+  }
+  
+  // Градиентный фон для разных блоков
+  &.top-block {
+    background: linear-gradient(135deg, $bg-primary 0%, $bg-secondary 100%);
+  }
+  
+  &.next-block-1 {
+    background: linear-gradient(135deg, $bg-secondary 0%, $bg-primary 100%);
+  }
+  
+  &.next-block-2 {
+    background: linear-gradient(135deg, $bg-primary 0%, #1f1f1f 100%);
+  }
+  
+  &.next-block-3 {
+    background: linear-gradient(135deg, $bg-secondary 0%, #2a2a2a 100%);
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 20%, rgba(77, 171, 247, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+.production-content-wrapper {
+  @include container(1400px, $spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: $spacing-3xl;
+  position: relative;
+  z-index: $z-base;
+  
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-xl;
+  }
+}
+
+// Изображение продукции
+.production-image-wrapper {
+  flex: 0 0 600px;
+  width: 600px;
+  height: 600px;
+  position: relative;
+  
+  @include mobile {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 300px;
+    max-height: 400px;
+    aspect-ratio: 1;
+  }
+  
+  .production-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius-xl;
+    overflow: hidden;
+    box-shadow: $shadow-2xl;
+    position: relative;
+    background: $bg-tertiary;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(77, 171, 247, 0.1) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform $transition-slow;
+    }
+    
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Карусель
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    @include glass-effect(0.2, $blur-md);
+    border-radius: $border-radius-round;
+    @include flex-center;
+    color: $text-primary;
+    font-size: $font-size-xl;
+    cursor: pointer;
+    z-index: $z-base + 1;
+    transition: all $transition-base;
+    box-shadow: $shadow-md;
+    
+    @include mobile {
+      width: 40px;
+      height: 40px;
+      font-size: $font-size-lg;
+    }
+    
+    &.arrow-left {
+      left: $spacing-md;
+    }
+    
+    &.arrow-right {
+      right: $spacing-md;
+    }
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%) scale(1.1);
+      @include glow-shadow($color-primary, 15px, 0.4);
+    }
+    
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+  }
+  
+  .carousel-indicators {
+    position: absolute;
+    bottom: $spacing-lg;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: $spacing-sm;
+    z-index: $z-base + 1;
+    
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: $border-radius-round;
+      background: rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all $transition-base;
+      
+      &.active {
+        background: $color-primary;
+        border-color: $color-primary;
+        transform: scale(1.3);
+        @include glow-shadow($color-primary, 8px, 0.5);
+      }
+      
+      &:hover {
+        background: $color-primary-light;
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+// Текстовый контент
+.production-text-content {
+  flex: 1;
+  max-width: 600px;
+  
+  @include mobile {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .production-title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-lg;
+    @include gradient-text($gradient-primary);
+    line-height: $line-height-tight;
+    
+    @include mobile {
+      font-size: $font-size-2xl;
+      margin-bottom: $spacing-md;
+    }
+  }
+  
+  .production-description {
+    font-size: $font-size-lg;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-xl;
+    
+    @include mobile {
+      font-size: $font-size-base;
+      margin-bottom: $spacing-lg;
+    }
+  }
+  
+  .production-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 $spacing-xl 0;
+    
+    @include mobile {
+      margin-bottom: $spacing-lg;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-sm 0;
+      color: $text-secondary;
+      font-size: $font-size-base;
+      
+      @include mobile {
+        font-size: $font-size-sm;
+        gap: $spacing-sm;
+      }
+      
+      &::before {
+        content: '✓';
+        color: $color-success;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+      }
+    }
+  }
+  
+  .contact-button {
+    @include gradient-button($gradient-primary);
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-base;
+    border-radius: $border-radius-md;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    
+    @include mobile {
+      width: 100%;
+      justify-content: center;
+      padding: $spacing-md;
+    }
+  }
+}
+

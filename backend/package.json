@@ -31,7 +31,7 @@
     "@nestjs/mapped-types": "^1.2.2",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
-    "@nestjs/schedule": "^6.0.0",
+    "@nestjs/schedule": "^4.0.0",
     "@prisma/adapter-pg": "^5.9.1",
     "@prisma/client": "^4.16.2",
     "@prisma/extension-pulse": "^0.2.2",

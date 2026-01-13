@@ -217,17 +217,83 @@ body .n-modal .n-card--bordered {
   .n-modal .n-card--bordered,
   body .n-modal .n-card,
   body .n-modal .n-card--bordered {
-    width: 80% !important;
-    max-width: 80vw !important;
+    width: 90% !important;
+    max-width: 90vw !important;
     min-width: 280px !important;
+    margin: 20px auto !important;
   }
   
   .n-card__content {
-    padding: 25px !important;
+    padding: 20px !important;
   }
   
   .n-card__header .n-card-header__main {
     font-size: 20px !important;
+  }
+  
+  // Форма на мобильных
+  .n-form {
+    .n-form-item {
+      margin-bottom: 16px !important;
+    }
+    
+    .n-form-item-label {
+      font-size: 14px !important;
+      margin-bottom: 8px !important;
+    }
+  }
+  
+  // Поля ввода на мобильных
+  .n-input {
+    min-height: 44px !important; // Для удобного нажатия
+    font-size: 16px !important; // Предотвращает зум на iOS
+    padding: 12px 16px !important;
+  }
+  
+  // Селект страны на мобильных
+  .n-select {
+    min-height: 44px !important;
+    font-size: 16px !important;
+  }
+  
+  // Кнопки на мобильных
+  .n-button {
+    min-height: 44px !important;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    touch-action: manipulation;
+  }
+  
+  // Flex контейнер для телефона
+  .n-form-item .n-flex {
+    flex-direction: column !important;
+    gap: 12px !important;
+    
+    .n-select {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex-shrink: 1 !important;
+    }
+    
+    .n-input {
+      width: 100% !important;
+      flex: 1 1 auto !important;
+    }
+  }
+  
+  // Кнопки формы на мобильных
+  .n-form > div:last-child {
+    .n-flex,
+    div[style*="display: flex"] {
+      flex-direction: column !important;
+      gap: 10px !important;
+      justify-content: stretch !important;
+      
+      .n-button {
+        width: 100% !important;
+        flex: 1 1 auto !important;
+      }
+    }
   }
 }
 
@@ -236,13 +302,14 @@ body .n-modal .n-card--bordered {
   .n-modal .n-card--bordered,
   body .n-modal .n-card,
   body .n-modal .n-card--bordered {
-    width: 90% !important;
-    max-width: 90vw !important;
+    width: 95% !important;
+    max-width: 95vw !important;
     min-width: 260px !important;
+    margin: 10px auto !important;
   }
   
   .n-card__content {
-    padding: 20px !important;
+    padding: 15px !important;
   }
   
   .n-card__header .n-card-header__main {
@@ -251,12 +318,33 @@ body .n-modal .n-card--bordered {
   
   .n-input {
     padding: 10px 12px !important;
-    font-size: 14px !important;
+    font-size: 16px !important; // Все еще 16px для предотвращения зума
   }
   
   .n-button {
     padding: 10px 16px !important;
     font-size: 14px !important;
+  }
+  
+  // Кнопки формы на маленьких экранах
+  .n-form > div:last-child {
+    .n-flex,
+    div[style*="display: flex"] {
+      flex-direction: column !important;
+      gap: 10px !important;
+      justify-content: stretch !important;
+      
+      .n-button {
+        width: 100% !important;
+        flex: 1 1 auto !important;
+      }
+    }
+  }
+  
+  // Переопределение инлайн-стилей для модального окна
+  .n-modal[style*="maxWidth"] {
+    max-width: 95vw !important;
+    width: 95% !important;
   }
 }
 

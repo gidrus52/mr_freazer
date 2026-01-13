@@ -1,0 +1,362 @@
+// Стили для главной страницы
+
+@import './variables';
+@import './mixins';
+
+// Мобильные миксины
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin mobile-small {
+  @media (max-width: 424px) {
+    @content;
+  }
+}
+
+.main-page {
+  height: calc(100vh - 9vh);
+  min-height: calc(100vh - 9vh);
+  max-height: calc(100vh - 9vh);
+  background: #1a1a1a;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Контейнер для главной страницы
+.main-page-container {
+  background: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: calc(100vh - 9vh);
+  overflow: hidden;
+}
+
+// Убираем черную полосу снизу - стили для NLayout на главной странице
+.n-layout:has(.main-page-container) {
+  background: #1a1a1a !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// Заголовок с контактами
+.main-header {
+  background: #2d2d2d;
+  border-bottom: 1px solid #404040;
+  padding: 20px 30px;
+  height: calc((100vh - 9vh) / 4);
+  min-height: 0;
+  max-height: calc((100vh - 9vh) / 4);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    padding: 15px 20px;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+  }
+}
+
+.main-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+.main-logo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  
+  .logo-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d0d0d0;
+    letter-spacing: -0.02em;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .logo-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+    
+    @include mobile {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #e0e0e0;
+  font-size: 16px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: #404040;
+      color: #ffffff;
+    }
+    
+    .contact-icon {
+      color: #d0d0d0;
+      font-size: 24px;
+    }
+    
+    .contact-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      
+      .contact-label {
+        font-size: 14px;
+        color: #888888;
+      }
+      
+      .contact-value {
+        font-weight: 500;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+// Главный блок с фоном
+.main-hero {
+  position: relative;
+  height: calc((100vh - 9vh) * 3 / 8);
+  min-height: 0;
+  max-height: calc((100vh - 9vh) * 3 / 8);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+  
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.4) contrast(1.1);
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 60px 30px;
+    text-align: center;
+    
+    @media (max-width: 768px) {
+      padding: 40px 20px;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #d0d0d0;
+      
+      @media (max-width: 768px) {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 2rem;
+      }
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #e0e0e0;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+// Блоки услуг
+.services-section {
+  padding: 30px 30px;
+  background: #1a1a1a;
+  height: calc((100vh - 9vh) * 3 / 8);
+  min-height: 0;
+  max-height: calc((100vh - 9vh) * 3 / 8);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    padding: 40px 20px;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+  }
+}
+
+.services-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.service-card {
+  background: #2d2d2d;
+  border: 1px solid #404040;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    color: #d0d0d0;
+    font-size: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 171, 247, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    
+    @media (max-width: 768px) {
+      width: 60px;
+      height: 60px;
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+  }
+  
+  &:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  .service-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 15px;
+    
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+  
+  .service-description {
+    font-size: 1rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+    
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Старые классы для совместимости
+.main_background_block {
+  @extend .main-hero;
+  
+  .hero-background {
+    background-position: -800px -1800px;
+  }
+}
+
+.main_block {
+  @extend .main-header-content;
+}
+
+.name_inner_block {
+  @extend .logo-text;
+}
+

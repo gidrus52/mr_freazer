@@ -1,0 +1,106 @@
+// Главный файл системы дизайна
+
+@import './variables';
+@import './mixins';
+@import './main-page';
+@import './app-view';
+@import './production-view';
+
+// Глобальные улучшения
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family-base;
+  color: $text-primary;
+  background: $bg-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Улучшенные скроллбары
+  @include custom-scrollbar(10px, $color-primary, $bg-tertiary);
+}
+
+// Улучшенные ссылки
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+  
+  &:hover {
+    color: $color-primary-light;
+  }
+}
+
+// Улучшенные кнопки
+button {
+  font-family: $font-family-base;
+  transition: all $transition-base;
+  
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Улучшенные заголовки
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  margin: 0;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+// Улучшенные карточки
+.card {
+  @include card-effect;
+  padding: $spacing-xl;
+}
+
+// Утилитарные классы
+.text-gradient {
+  @include gradient-text($gradient-primary);
+}
+
+.glass-effect {
+  @include glass-effect(0.1, $blur-md);
+}
+
+.hover-lift {
+  @include hover-lift;
+}
+
+.fade-in {
+  @include fade-in;
+}
+
+.slide-in-left {
+  @include slide-in('left');
+}
+
+.slide-in-right {
+  @include slide-in('right');
+}
+
+.slide-in-up {
+  @include slide-in('up');
+}
+
+.slide-in-down {
+  @include slide-in('down');
+}
+

@@ -3,24 +3,56 @@
   height: 33vh;
   background: url('../img/background/back_01.jpg') no-repeat -800px -1800px !important;
   color: #888888;
+  
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 50vh;
+    background-position: center center !important;
+    background-size: cover !important;
+    padding: 15px;
+  }
 }
 
 .main_block {
   //height: max-content;
   align-items: center;
-  align-content: center
+  align-content: center;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+  }
 }
 
 .inner_block {
   align-items: center;
   align-content: center;
-
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
 }
 
 .name_inner_block {
   font-size: 3.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 }
 
 .inner_block__item_left {
   //text-align: left;  align-items: center;
+  
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 }

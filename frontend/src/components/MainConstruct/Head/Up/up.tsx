@@ -29,6 +29,24 @@ export default defineComponent({
         const isUserAuthenticated = computed(() => isAuthenticated())
         const adminUser = computed(() => getAdminUser())
         
+        // Определяем, является ли устройство мобильным
+        const isMobile = ref(false)
+        
+        const checkMobile = () => {
+            if (typeof window !== 'undefined') {
+                isMobile.value = window.innerWidth <= 768
+            }
+        }
+        
+        onMounted(() => {
+            checkMobile()
+            window.addEventListener('resize', checkMobile)
+        })
+        
+        onUnmounted(() => {
+            window.removeEventListener('resize', checkMobile)
+        })
+        
         // Отслеживаем изменения статуса авторизации
         watch(isUserAuthenticated, (newValue, oldValue) => {
             if (newValue !== oldValue) {
@@ -45,8 +63,7 @@ export default defineComponent({
         const routeNameMap: { [key: string]: string } = {
             'Main': 'nav.home',
             'Production': 'nav.ourServices',
-            'App': 'nav.ourProducts',
-            'Login': 'nav.login'
+            'App': 'nav.ourProducts'
         }
         
         const getDisplayName = (routeName: string | undefined): string => {
@@ -97,8 +114,11 @@ export default defineComponent({
             }, 1000) // Длительность появления 1 секунда
         }
         
-        // Запускаем анимацию
+        // Запускаем анимацию и проверяем размер экрана
         onMounted(() => {
+            checkMobile()
+            window.addEventListener('resize', checkMobile)
+            
             // Первая анимация сразу
             setTimeout(() => {
                 startAnimationCycle()
@@ -129,23 +149,15 @@ export default defineComponent({
             flagClass,
             flagTitle,
             isTelegramAnimating,
-            isTelegramDisappearing
+            isTelegramDisappearing,
+            isMobile
         }
     },
     render () {
 
-        const iconState = (() => {
-            if (this.routeName == 'Login') {
-                return <RouterLink to={'/'}>
-                    <NSpin size={15}>
-
-                    </NSpin>
-                </RouterLink>
-            }
-            return <NIcon size={25}>
-                <VpnKeyRound></VpnKeyRound>
-            </NIcon>
-        })()
+        const iconState = <NIcon size={25}>
+            <VpnKeyRound></VpnKeyRound>
+        </NIcon>
         
         return (
             <NGrid cols={'8'} style={''}>
@@ -154,28 +166,13 @@ export default defineComponent({
                     
                     // Функция для создания элемента навигации
                     let nodeItem = (toName: string, label?: string ) => {
-                        // Если это роут Login и пользователь авторизован, пропускаем его
-                        if (label === 'Login' && this.isUserAuthenticated) {
-                            return null
-                        }
-                        
-                        // Если это роут Login и пользователь НЕ авторизован, показываем "Login"
-                        if (label === 'Login' && !this.isUserAuthenticated) {
-                            return (<NGridItem span={2} style={'align-items: center; overflow: hidden;'}>
-                                <RouterLink to={label==this.currentRoute.name?'/':toName}>
-                                    <div className={'header-element'}>
-                                        {label==this.currentRoute.name ? this.getHomeName() : this.getDisplayName(label)}
-                                    </div>
-                                </RouterLink>
-                            </NGridItem>)
-                        }
-                        
-                        // Для всех остальных роутов
-                        return (<NGridItem span={label=='Login'?2:1} style={'align-items: center; overflow: hidden;'}>
+                        // В мобильной версии кнопки навигации занимают 2 span, в десктопе - 1 span
+                        const navigationSpan = this.isMobile ? 2 : 1
+                        return (<NGridItem span={navigationSpan} style={'align-items: center; overflow: hidden;'}>
                             <RouterLink
                                 to={label==this.currentRoute.name?'/':toName}>
                                 <div className={'header-element'}>
-                                    {label==this.currentRoute.name ? (this.currentLanguage.value === 'ru' ? 'Главная' : 'Home') : this.getDisplayName(label)}
+                                    {label==this.currentRoute.name ? this.getHomeName() : this.getDisplayName(label)}
                                 </div>
 
                             </RouterLink>
@@ -191,7 +188,8 @@ export default defineComponent({
                             if (item) {
                                 nGiArr.push(item)
                                 // Подсчитываем использованные колонки
-                                if (i.name === 'Login') {
+                                // В мобильной версии кнопки навигации занимают 2 span
+                                if (this.isMobile) {
                                     usedCols += 2
                                 } else {
                                     usedCols += 1

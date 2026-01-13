@@ -5,9 +5,10 @@ export type TranslationKey =
   // Navigation
   | 'nav.home' | 'nav.ourServices' | 'nav.ourProducts' | 'nav.login'
   // Main page
-  | 'main.address' | 'main.city' | 'main.workDays' | 'main.workHours' | 'main.phone1' | 'main.phone2'
+  | 'main.companyName' | 'main.heroSubtitle' | 'main.address' | 'main.city' | 'main.workDays' | 'main.workHours' | 'main.phone1' | 'main.phone2'
   | 'main.milling' | 'main.millingDesc' | 'main.turning' | 'main.turningDesc'
   | 'main.welding' | 'main.weldingDesc' | 'main.cutting' | 'main.cuttingDesc'
+  | 'main.telegram' | 'main.email'
   // Production page
   | 'production.stamps.title' | 'production.stamps.description'
   | 'production.pressforms.title' | 'production.pressforms.description'
@@ -15,8 +16,9 @@ export type TranslationKey =
   | 'production.brake.title' | 'production.brake.description'
   | 'production.belt.title' | 'production.belt.description'
   | 'production.chain.title' | 'production.chain.description'
+  | 'production.milling.title' | 'production.milling.description'
   | 'production.orderButton' | 'production.contactUs'
-  | 'production.nav.bodies' | 'production.nav.belts' | 'production.nav.chains' | 'production.nav.brake'
+  | 'production.nav.bodies' | 'production.nav.belts' | 'production.nav.chains' | 'production.nav.brake' | 'production.nav.milling'
   // Login page
   | 'login.welcome' | 'login.tabLogin' | 'login.tabRegister' | 'login.email' | 'login.password'
   | 'login.emailPlaceholder' | 'login.passwordPlaceholder' | 'login.loginButton' | 'login.registerButton'
@@ -27,7 +29,7 @@ export type TranslationKey =
   | 'cabinet.actions' | 'cabinet.logout' | 'cabinet.title' | 'cabinet.profile' | 'cabinet.orders' | 'cabinet.adminPanel'
   | 'cabinet.accessDenied' | 'cabinet.info'
   // App page (Products)
-  | 'app.surron' | 'app.talaria' | 'app.beltDrive' | 'app.suspension'
+  | 'app.companyName' | 'app.surron' | 'app.talaria' | 'app.beltDrive' | 'app.suspension'
   | 'app.surronBelts.description' | 'app.surronSuspension.description' | 'app.contactUs'
   | 'app.form.name' | 'app.form.namePlaceholder' | 'app.form.phone' | 'app.form.comment' | 'app.form.commentPlaceholder'
   | 'app.form.fillAllFields' | 'app.form.success' | 'app.form.error'
@@ -38,11 +40,15 @@ export type TranslationKey =
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   ru: {
     // Navigation
-    'nav.home': 'Главная',
+    'nav.home': 'На главную',
     'nav.ourServices': 'Наши услуги',
     'nav.ourProducts': 'Наши товары',
     'nav.login': 'Войти',
     // Main page
+    'main.companyName': 'МИСТЕР ФРЕЗЕР',
+    'main.heroSubtitle': 'Профессиональные услуги по металлообработке',
+    'main.telegram': 'Telegram',
+    'main.email': 'Email',
     'main.address': 'улица Шекспира, 1"Ж"',
     'main.city': 'Нижний Новгород',
     'main.workDays': 'Пн-Пт',
@@ -58,8 +64,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'main.cutting': 'Распил металла',
     'main.cuttingDesc': 'Черные и цветные металлы',
     // Production page
-    'production.stamps.title': 'Штампы. Пресформы. Корпуса',
-    'production.stamps.description': 'Профессиональные услуги по изготовлению корпусов из конструкционных, инструментальных сталей, бронированноых сталей, а также алюминия на современных станках с числовым программным управлением.',
+    'production.stamps.title': 'Штампы. Пресформы. Корпуса. ',
+    'production.stamps.description': 'Профессиональные услуги по изготовлению корпусов из конструкционных, инструментальных сталей, а также алюминия на современных станках. Фрезерная и токарная обработки общего назначения',
     'production.pressforms.title': 'Пресформы',
     'production.pressforms.description': 'Изготовление пресформ для различных отраслей промышленности.',
     'production.bodies.title': 'Корпуса',
@@ -70,12 +76,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'production.belt.description': 'Современное оборудование и высококвалифицированные специалисты. Ременные передачи для приводов конвейеров, станков, электромотоциклов, мотоциклов с двс.',
     'production.chain.title': 'Цепные передачи',
     'production.chain.description': 'Современное оборудование и высококвалифицированные специалисты. Цепные передачи для приводов конвейеров, станков, электромотоциклов, мотоциклов с двс. Увеличенные и нестандартные звезды для стантрайдинга.',
+    'production.milling.title': 'Фрезерная и токарная обработки',
+    'production.milling.description': 'Фрезерная и токарная обработки общего назначения. Плсастик и металлы',
     'production.orderButton': 'Заказать',
     'production.contactUs': 'Свяжитесь с нами',
     'production.nav.bodies': 'Корпуса и пресс-формы',
     'production.nav.belts': 'Ременные передачи',
     'production.nav.chains': 'Цепные передачи',
     'production.nav.brake': 'Тормозная система',
+    'production.nav.milling': 'Фрезерная и токарная обработки',
     // Login page
     'login.welcome': 'Добро пожаловать',
     'login.tabLogin': 'Вход',
@@ -109,6 +118,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'cabinet.accessDenied': 'Для доступа к личному кабинету необходимо войти в систему.',
     'cabinet.info': 'Здесь вы можете управлять своим профилем и настройками.',
     // App page (Products)
+    'app.companyName': 'Мистер фрезер',
     'app.surron': 'Сууррон',
     'app.talaria': 'Талария',
     'app.beltDrive': 'Ременная передача',
@@ -120,7 +130,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'app.form.namePlaceholder': 'Введите ваше имя',
     'app.form.phone': 'Телефон',
     'app.form.comment': 'Комментарий',
-    'app.form.commentPlaceholder': 'Опишите ваш запрос (необязательно)',
+    'app.form.commentPlaceholder': 'Опишите Ваш запрос',
     'app.form.fillAllFields': 'Пожалуйста, заполните все обязательные поля',
     'app.form.success': 'Заявка отправлена!',
     'app.form.error': 'Ошибка при отправке заявки',
@@ -141,6 +151,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'nav.ourProducts': 'Our Products',
     'nav.login': 'Login',
     // Main page
+    'main.companyName': 'Steel Shift',
+    'main.heroSubtitle': 'Professional metalworking services',
+    'main.telegram': 'Telegram',
+    'main.email': 'Email',
     'main.address': 'Shakespeare Street, 1"Zh"',
     'main.city': 'Nizhny Novgorod',
     'main.workDays': 'Mon-Fri',
@@ -168,12 +182,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'production.belt.description': 'Modern equipment and highly qualified specialists. Belt drives for conveyors, machine tools, electric motorcycles, motorcycles with internal combustion engines.',
     'production.chain.title': 'Chain drives',
     'production.chain.description': 'Modern equipment and highly qualified specialists. Chain drives for conveyors, machine tools, electric motorcycles, motorcycles with internal combustion engines. Enlarged and non-standard sprockets for stunt riding.',
+    'production.milling.title': 'Milling and turning',
+    'production.milling.description': 'General purpose milling and turning',
     'production.orderButton': 'Order',
     'production.contactUs': 'Contact us',
     'production.nav.bodies': 'Bodies and pressforms',
     'production.nav.belts': 'Belt drives',
     'production.nav.chains': 'Chain drives',
     'production.nav.brake': 'Brake system',
+    'production.nav.milling': 'Milling and turning',
     // Login page
     'login.welcome': 'Welcome',
     'login.tabLogin': 'Login',
@@ -207,6 +224,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'cabinet.accessDenied': 'You need to log in to access your personal cabinet.',
     'cabinet.info': 'Here you can manage your profile and settings.',
     // App page (Products)
+    'app.companyName': 'Steel Shift',
     'app.surron': 'Surron',
     'app.talaria': 'Talaria',
     'app.beltDrive': 'Belt drive',
@@ -218,7 +236,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'app.form.namePlaceholder': 'Enter your name',
     'app.form.phone': 'Phone',
     'app.form.comment': 'Comment',
-    'app.form.commentPlaceholder': 'Describe your request (optional)',
+    'app.form.commentPlaceholder': 'Describe your request',
     'app.form.fillAllFields': 'Please fill in all required fields',
     'app.form.success': 'Request sent!',
     'app.form.error': 'Error sending request',
