@@ -5,10 +5,12 @@ import {isAuthenticated} from "../../utils/api";
 import {NGrid, NGridItem, NButton, NInput, NInputGroup} from 'naive-ui'
 import CartIcon from '../../components/Cart/CartIcon'
 import Cart from '../../components/Cart/Cart'
+import { useTranslation } from "../../utils/translations";
 
 export default defineComponent({
     name: "AppHeader",
     setup() {
+        const { t } = useTranslation()
         const currentRoute = computed(() => router.currentRoute.value)
         const isUserAuthenticated = computed(() => isAuthenticated())
         const showCart = ref(false)
@@ -18,6 +20,7 @@ export default defineComponent({
         }
 
         return {
+            t,
             currentRoute,
             isUserAuthenticated,
             showCart,
@@ -44,7 +47,7 @@ export default defineComponent({
                                 display: 'flex',
                                 alignItems: 'center'
                             }}>
-                                📱 Мистер фрезер
+                                📱 {this.t('app.companyName')}
                             </div>
                         </NGridItem>
 

@@ -1,0 +1,121 @@
+// Система дизайна - Переменные
+
+// Цветовая палитра
+$color-primary: #4dabf7;
+$color-primary-dark: #339af0;
+$color-primary-light: #74c0fc;
+$color-primary-lighter: #a5d8ff;
+
+$color-secondary: #ff6b6b;
+$color-secondary-dark: #fa5252;
+$color-secondary-light: #ff8787;
+
+$color-success: #51cf66;
+$color-warning: #ffd43b;
+$color-danger: #ff6b6b;
+$color-info: #4dabf7;
+
+// Фоновые цвета
+$bg-primary: #1a1a1a;
+$bg-secondary: #2d2d2d;
+$bg-tertiary: #404040;
+$bg-card: #2d2d2d;
+$bg-overlay: rgba(0, 0, 0, 0.8);
+
+// Текстовые цвета
+$text-primary: #ffffff;
+$text-secondary: #e0e0e0;
+$text-tertiary: #b0b0b0;
+$text-muted: #888888;
+$text-disabled: #666666;
+
+// Границы
+$border-color: #404040;
+$border-color-light: #555555;
+$border-color-dark: #2d2d2d;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-round: 50%;
+
+// Тени
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+$shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.4);
+$shadow-2xl: 0 20px 40px rgba(0, 0, 0, 0.5);
+$shadow-glow: 0 0 20px rgba(77, 171, 247, 0.3);
+$shadow-glow-strong: 0 0 30px rgba(77, 171, 247, 0.5);
+
+// Типографика
+$font-family-base: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$font-family-heading: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$font-family-mono: 'Fira Code', 'Courier New', monospace;
+
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-md: 1.125rem;   // 18px
+$font-size-lg: 1.25rem;    // 20px
+$font-size-xl: 1.5rem;    // 24px
+$font-size-2xl: 2rem;     // 32px
+$font-size-3xl: 2.5rem;   // 40px
+$font-size-4xl: 3rem;     // 48px
+$font-size-5xl: 3.5rem;   // 56px
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// Отступы и размеры
+$spacing-xs: 0.25rem;   // 4px
+$spacing-sm: 0.5rem;    // 8px
+$spacing-md: 1rem;      // 16px
+$spacing-lg: 1.5rem;    // 24px
+$spacing-xl: 2rem;      // 32px
+$spacing-2xl: 3rem;     // 48px
+$spacing-3xl: 4rem;     // 64px
+
+// Переходы и анимации
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+$transition-slower: 0.8s ease;
+
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+// Z-index слои
+$z-base: 1;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-fixed: 300;
+$z-modal-backdrop: 400;
+$z-modal: 500;
+$z-popover: 600;
+$z-tooltip: 700;
+
+// Градиенты
+$gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+$gradient-secondary: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+$gradient-dark: linear-gradient(135deg, $bg-primary 0%, $bg-secondary 100%);
+$gradient-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+
+// Эффекты размытия
+$blur-sm: blur(4px);
+$blur-md: blur(8px);
+$blur-lg: blur(16px);
+$blur-xl: blur(24px);
+
+
+
+
+

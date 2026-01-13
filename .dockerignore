@@ -1,4 +1,80 @@
-*.md
+# Git
 .git
 .gitignore
+.gitattributes
 
+# Documentation
+*.md
+docs/
+README*.md
+DOCKER*.md
+QUICK*.md
+START*.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies (will be installed in container)
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Large files and archives
+*.rar
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.iso
+*.dmg
+*.img
+**/*.rar
+**/*.zip
+**/*.tar
+**/*.tar.gz
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Test files
+coverage/
+.nyc_output/
+*.test.ts
+*.spec.ts
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+Jenkinsfile
+
+# Scripts (not needed in container)
+scripts/
+
+# Docker files (not needed in container)
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# Misc
+*.md
+!.github/**/*.md

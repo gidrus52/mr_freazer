@@ -4,15 +4,18 @@ FROM node:20-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Install Prisma CLI globally (optional, but helpful)
-RUN npm install -g prisma
+# Install Prisma CLI globally (matching package.json version)
+RUN npm install -g prisma@4.16.2
 
 # Copy package files
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies
-RUN npm ci
+# Install dependencies with retry and timeout
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
 # Generate Prisma Client
 RUN npx prisma generate
@@ -29,14 +32,17 @@ FROM node:20-alpine
 # Set working directory
 WORKDIR /app
 
-# Install Prisma CLI for migrations
-RUN npm install -g prisma
+# Install Prisma CLI for migrations (matching package.json version)
+RUN npm install -g prisma@4.16.2
 
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
-RUN npm ci --only=production
+# Install only production dependencies with retry and timeout
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm ci --omit=dev --legacy-peer-deps || npm install --omit=dev --legacy-peer-deps
 
 # Copy Prisma schema
 COPY prisma ./prisma/

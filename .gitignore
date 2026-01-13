@@ -28,6 +28,13 @@ yarn-error.log*
 *.tmp
 *.temp
 
+# SSL Certificates and Keys (keep private keys out of git)
+ssl/*.key
+ssl/*.pem
+ssl/*.crt
+ssl/*.cer
+!ssl/README.md
+
 backend/node_modules
 frontend/node_modules
 node_modules

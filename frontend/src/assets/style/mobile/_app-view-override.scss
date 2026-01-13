@@ -1,0 +1,30 @@
+// КРИТИЧНО: Переопределение правил навигации для AppView
+// Этот файл должен загружаться после production-view
+// чтобы переопределить правило, которое скрывает навигацию
+
+// Навигация - скрываем на мобильных для AppView
+.production-layout:has(.app-block) .navigation-container {
+  @include mobile {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+.production-layout:has(.app-block) .burger-button {
+  @include mobile {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+// Меню навигации также скрываем
+.production-layout:has(.app-block) .navigation-menu {
+  @include mobile {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+

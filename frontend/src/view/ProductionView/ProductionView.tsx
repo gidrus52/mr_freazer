@@ -33,6 +33,7 @@ import youtubeIcon from "../../assets/img/icons/youtubeIcon";
 import { useTranslation } from "../../utils/translations";
 import { countries, defaultCountry, type Country } from "../../utils/countries";
 import { useLanguageStore } from "../../stores/languageStore";
+import { getImageUrl } from "../../utils/imageUtils";
 
 // import dffg  from '../../assets/img/background/back_01.jpg'
 
@@ -50,7 +51,7 @@ const ProductionView = defineComponent({
         setup() {
             const { t } = useTranslation()
             const languageStore = useLanguageStore()
-            const sections = ['topBlock', 'nextBlock_1', 'nextBlock_2', 'nextBlock_3']
+            const sections = ['nextBlock_4', 'topBlock', 'nextBlock_1', 'nextBlock_2', 'nextBlock_3']
             let currentIndex = 0
             let lastScrollTime = 0
             const SCROLL_DELAY = 500 // 500ms delay
@@ -71,7 +72,8 @@ const ProductionView = defineComponent({
                 topBlock: 0,
                 nextBlock_1: 0,
                 nextBlock_2: 0,
-                nextBlock_3: 0
+                nextBlock_3: 0,
+                nextBlock_4: 0
             })
 
             // Состояние для навигации
@@ -100,44 +102,77 @@ const ProductionView = defineComponent({
                 }
             }
 
+            // Динамическое определение размеров экрана для мобильных устройств
+            const updateScreenDimensions = () => {
+                if (typeof window !== 'undefined') {
+                    const width = window.innerWidth
+                    const height = window.innerHeight
+                    const isMobile = width <= 768 // Мобильное устройство
+                    
+                    if (isMobile) {
+                        // Устанавливаем CSS переменные для размеров экрана
+                        document.documentElement.style.setProperty('--mobile-screen-width', `${width}px`)
+                        document.documentElement.style.setProperty('--mobile-screen-height', `${height}px`)
+                        // Ширина контента - немного меньше ширины экрана для отступов
+                        const contentWidth = Math.min(width - 20, 400) // Максимум 400px, но не больше ширины экрана минус отступы
+                        document.documentElement.style.setProperty('--mobile-content-width', `${contentWidth}px`)
+                    } else {
+                        // Для десктопа сбрасываем переменные
+                        document.documentElement.style.setProperty('--mobile-screen-width', 'auto')
+                        document.documentElement.style.setProperty('--mobile-screen-height', 'auto')
+                        document.documentElement.style.setProperty('--mobile-content-width', 'auto')
+                    }
+                }
+            }
+
             // Запускаем автопрокрутку при монтировании
             onMounted(() => {
+                updateScreenDimensions()
+                window.addEventListener('resize', updateScreenDimensions)
+                window.addEventListener('orientationchange', updateScreenDimensions)
                 startAutoScroll('topBlock')
                 startAutoScroll('nextBlock_1')
                 startAutoScroll('nextBlock_2')
                 startAutoScroll('nextBlock_3')
+                startAutoScroll('nextBlock_4')
             })
 
             // Останавливаем автопрокрутку при размонтировании
             onUnmounted(() => {
+                window.removeEventListener('resize', updateScreenDimensions)
+                window.removeEventListener('orientationchange', updateScreenDimensions)
                 stopAutoScroll('topBlock')
                 stopAutoScroll('nextBlock_1')
                 stopAutoScroll('nextBlock_2')
                 stopAutoScroll('nextBlock_3')
+                stopAutoScroll('nextBlock_4')
             })
 
             // Массивы изображений для каждого блока
             const blockImages = {
                 topBlock: [
-                    "src/assets/img/productionpage/KorpPress/1.png",
-                    "src/assets/img/productionpage/KorpPress/2.png", // Замените на реальные изображения
-                    "src/assets/img/productionpage/KorpPress/3.png", // Замените на реальные изображения
-                    "src/assets/img/productionpage/KorpPress/4.png", // Замените на реальные изображения
-                    "src/assets/img/productionpage/KorpPress/5.png"
+                    getImageUrl("productionpage/KorpPress/1.png"),
+                    getImageUrl("productionpage/KorpPress/2.png"),
+                    getImageUrl("productionpage/KorpPress/3.png"),
+                    getImageUrl("productionpage/KorpPress/4.png"),
+                    getImageUrl("productionpage/KorpPress/5.png")
                 ],
                 nextBlock_1: [
-                    "src/assets/img/productionpage/Rem/1.png",
-                    "src/assets/img/productionpage/Rem/2.png",
-                    "src/assets/img/productionpage/Rem/3.png",
-                    "src/assets/img/productionpage/Rem/4.webp"
+                    getImageUrl("productionpage/Rem/1.png"),
+                    getImageUrl("productionpage/Rem/2.png"),
+                    getImageUrl("productionpage/Rem/3.png"),
+                    getImageUrl("productionpage/Rem/4.webp")
                 ],
                 nextBlock_2: [
-                   "src/assets/img/productionpage/Zvezda/1.png",
-                    "src/assets/img/productionpage/Zvezda/2.png",
+                   getImageUrl("productionpage/Zvezda/1.png"),
+                    getImageUrl("productionpage/Zvezda/2.png"),
                 ],
                 nextBlock_3: [
-                    "src/assets/img/productionpage/Brake/1.png",
-                    "src/assets/img/productionpage/Brake/2.png"
+                    getImageUrl("productionpage/Brake/1.png"),
+                    getImageUrl("productionpage/Brake/2.png")
+                ],
+                nextBlock_4: [
+                    getImageUrl("productionpage/Common_/common_1.png")
                 ]
             }
 
@@ -343,6 +378,12 @@ const ProductionView = defineComponent({
                     return
                 }
 
+                // Проверка комментария
+                if (!formData.value.comment.trim()) {
+                    message.error(t('app.form.commentRequired'))
+                    return
+                }
+
                 loading.value = true
 
                 try {
@@ -482,6 +523,12 @@ Email: forsalenn@gmail.com
                             <div class="navigation-menu">
                                 <div class="navigation-buttons">
                                     <NButton
+                                        onClick={() => this.navigateToBlock('nextBlock_4')}
+                                        class="navigation-button"
+                                    >
+                                        {this.t('production.nav.milling')}
+                                    </NButton>
+                                    <NButton
                                         onClick={() => this.navigateToBlock('topBlock')}
                                         class="navigation-button"
                                     >
@@ -509,8 +556,101 @@ Email: forsalenn@gmail.com
                             </div>
                         )}
                     </div>
+                    <NLayout id="nextBlock_4" class="production-block next-block-4">
+                        <NFlex class="production-flex">
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_4')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <img
+                                    src={this.getCurrentImage('nextBlock_4')}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('production.milling.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_4')}
+                                />
+                            </NSpace>
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                        {this.t('production.milling.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.milling.description')}
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
+                        </NFlex>
+                    </NLayout>
                     <NLayout id="topBlock" class="production-block top-block">
                         <NFlex class="production-flex">
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                    {this.t('production.stamps.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.stamps.description')}</p>
+                                        <p class="production-description">
+                                            
+                                        </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
+                            </NSpace>
                             <NSpace 
                                 class="carousel-container"
                                 data-image-container="true"
@@ -544,16 +684,51 @@ Email: forsalenn@gmail.com
                                     onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'topBlock')}
                                 />
                             </NSpace>
+                        </NFlex>
+                    </NLayout>
+                    <NLayout id="nextBlock_1" class="production-block next-block-1">
+                        <NFlex class="production-flex">
+                            <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <img
+                                    src={this.getCurrentImage('nextBlock_1')}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        maxWidth: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
+                                        display: 'block'
+                                    }}
+                                    alt={this.t('production.belt.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')}
+                                />
+                            </NSpace>
                             <NSpace class="production-content">
                                 <div class="production-text">
                                     <div class="production-title">
-                                    {this.t('production.stamps.title')}
+                                        {this.t('production.belt.title')}
                                     </div>
                                     <p class="production-description">
-                                        {this.t('production.stamps.description')}</p>
-                                        <p class="production-description">
-                                            
-                                        </p>
+                                        {this.t('production.belt.description')}
+                                    </p>
                                     <NButton 
                                         type="default" 
                                         size="large"
@@ -575,27 +750,22 @@ Email: forsalenn@gmail.com
                             </NSpace>
                         </NFlex>
                     </NLayout>
-                    <NLayout id="nextBlock_1" class="production-block next-block-1">
+                    <NLayout id="nextBlock_2" class="production-block next-block-2">
                         <NFlex class="production-flex">
-                            <NSpace style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
-                                <div style={{textAlign: 'center', color: '#e0e0e0', lineHeight: '1.6'}}>
-                                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4dabf7', marginBottom: '20px'}}>
-                                        {this.t('production.belt.title')}
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                        {this.t('production.chain.title')}
                                     </div>
-                                    <p style={{fontSize: '18px', marginBottom: '30px'}}>{this.t('production.belt.description')}</p>
+                                    <p class="production-description">
+                                        {this.t('production.chain.description')}
+                                    </p>
                                     <NButton 
                                         type="default" 
                                         size="large"
                                         onClick={this.openModal}
+                                        class="contact-button"
                                         style={{
-                                            fontSize: '18px',
-                                            padding: '12px 30px',
-                                            borderRadius: '8px',
-                                            fontWeight: 'bold',
-                                            backgroundColor: '#1a1a1a',
-                                            border: '2px solid #404040',
-                                            color: '#ffffff',
-                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
@@ -607,65 +777,29 @@ Email: forsalenn@gmail.com
                                         </NIcon>
                                         {this.t('production.contactUs')}
                                     </NButton>
-                                            </div>
+                                </div>
                             </NSpace>
                             <NSpace 
-                                style={{
-                                    width: '600px',
-                                    height: '600px',
-                                    minWidth: '600px',
-                                    maxWidth: '600px',
-                                    minHeight: '600px',
-                                    maxHeight: '600px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    flexShrink: 0
-                                }}
-                                data-image-container="true"
-                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')}
-                            >
-                                <img 
-                                    src={this.getCurrentImage('nextBlock_1')}
-                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_1')} 
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        maxWidth: '100%',
-                                        maxHeight: '100%',
-                                        objectFit: 'contain',
-                                        display: 'block'
-                                    }}
-                                    alt="Ременные передачи"
-                                />
-                            </NSpace>
-                        </NFlex>
-                    </NLayout>
-                    <NLayout id="nextBlock_2" style={{background: '#1a1a1a', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-                        <NFlex style={{maxWidth: '1400px', width: '100%', height: '100%', padding: '0 20px', alignItems: 'center'}}>
-                            <NSpace 
-                                style={{
-                                    width: '600px',
-                                    height: '600px',
-                                    minWidth: '600px',
-                                    maxWidth: '600px',
-                                    minHeight: '600px',
-                                    maxHeight: '600px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    flexShrink: 0
-                                }}
+                                class="carousel-container"
                                 data-image-container="true"
                                 onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')}
+                                style={{
+                                    width: '600px',
+                                    height: '600px',
+                                    minWidth: '600px',
+                                    maxWidth: '600px',
+                                    minHeight: '600px',
+                                    maxHeight: '600px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}
                             >
-                                <img 
+                                <img
                                     src={this.getCurrentImage('nextBlock_2')}
-                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')} 
                                     style={{
                                         width: '100%',
                                         height: '100%',
@@ -675,77 +809,17 @@ Email: forsalenn@gmail.com
                                         display: 'block'
                                     }}
                                     alt={this.t('production.chain.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_2')}
                                 />
-                            </NSpace>
-                            <NSpace style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
-                                <div style={{textAlign: 'center', color: '#e0e0e0', lineHeight: '1.6'}}>
-                                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4dabf7', marginBottom: '20px'}}>
-                                        {this.t('production.chain.title')}
-                                    </div>
-                                    <p style={{fontSize: '18px', marginBottom: '30px', whiteSpace: 'pre-line'}}>{this.t('production.chain.description')}</p>
-                                    <NButton 
-                                        type="default" 
-                                        size="large"
-                                        onClick={this.openModal}
-                                        style={{
-                                            fontSize: '18px',
-                                            padding: '12px 30px',
-                                            borderRadius: '8px',
-                                            fontWeight: 'bold',
-                                            backgroundColor: '#1a1a1a',
-                                            border: '2px solid #404040',
-                                            color: '#ffffff',
-                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto'
-                                        }}
-                                    >
-                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                            <LocalPhoneRound></LocalPhoneRound>
-                                        </NIcon>
-                                        {this.t('production.contactUs')}
-                                    </NButton>
-                                </div>
                             </NSpace>
                         </NFlex>
                     </NLayout>
-                    <NLayout id="nextBlock_3" style={{background: '#2d2d2d', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-                        <NFlex style={{maxWidth: '1400px', width: '100%', height: '100%', padding: '0 20px', alignItems: 'center'}}>
-                            <NSpace style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
-                                <div style={{textAlign: 'center', color: '#e0e0e0', lineHeight: '1.6'}}>
-                                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4dabf7', marginBottom: '20px'}}>
-                                        {this.t('production.brake.title')}
-                                    </div>
-                                    <p style={{fontSize: '18px', marginBottom: '30px', whiteSpace: 'pre-line'}}>{this.t('production.brake.description')}</p>
-                                    <NButton 
-                                        type="default" 
-                                        size="large"
-                                        onClick={this.openModal}
-                                        style={{
-                                            fontSize: '18px',
-                                            padding: '12px 30px',
-                                            borderRadius: '8px',
-                                            fontWeight: 'bold',
-                                            backgroundColor: '#1a1a1a',
-                                            border: '2px solid #404040',
-                                            color: '#ffffff',
-                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto'
-                                        }}
-                                    >
-                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
-                                            <LocalPhoneRound></LocalPhoneRound>
-                                        </NIcon>
-                                        {this.t('production.contactUs')}
-                                    </NButton>
-                                </div>
-                            </NSpace>
+                    <NLayout id="nextBlock_3" class="production-block next-block-3">
+                        <NFlex class="production-flex">
                             <NSpace 
+                                class="carousel-container"
+                                data-image-container="true"
+                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')}
                                 style={{
                                     width: '600px',
                                     height: '600px',
@@ -760,12 +834,9 @@ Email: forsalenn@gmail.com
                                     overflow: 'hidden',
                                     flexShrink: 0
                                 }}
-                                data-image-container="true"
-                                onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')}
                             >
-                                <img 
+                                <img
                                     src={this.getCurrentImage('nextBlock_3')}
-                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')} 
                                     style={{
                                         width: '100%',
                                         height: '100%',
@@ -775,7 +846,35 @@ Email: forsalenn@gmail.com
                                         display: 'block'
                                     }}
                                     alt={this.t('production.brake.title')}
+                                    onWheel={(e: WheelEvent) => this.handleImageWheel(e, 'nextBlock_3')}
                                 />
+                            </NSpace>
+                            <NSpace class="production-content">
+                                <div class="production-text">
+                                    <div class="production-title">
+                                        {this.t('production.brake.title')}
+                                    </div>
+                                    <p class="production-description">
+                                        {this.t('production.brake.description')}
+                                    </p>
+                                    <NButton 
+                                        type="default" 
+                                        size="large"
+                                        onClick={this.openModal}
+                                        class="contact-button"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            margin: '0 auto'
+                                        }}
+                                    >
+                                        <NIcon size={20} color="#98FB98" style={{ marginRight: '12px' }}>
+                                            <LocalPhoneRound></LocalPhoneRound>
+                                        </NIcon>
+                                        {this.t('production.contactUs')}
+                                    </NButton>
+                                </div>
                             </NSpace>
                         </NFlex>
                     </NLayout>
@@ -841,11 +940,11 @@ Email: forsalenn@gmail.com
                                 </NFlex>
                             </NFormItem>
                             
-                            <NFormItem label={this.t('app.form.comment')} path="comment">
+                            <NFormItem label={this.t('app.form.comment')} path="comment" rule={{ required: true, message: this.t('app.form.commentRequired') }}>
                                 <NInput
                                     value={this.formData.comment}
                                     onUpdateValue={(value: string) => this.formData.comment = value}
-                                    placeholder="Опишите ваш запрос (необязательно)"
+                                    placeholder={this.t('app.form.commentPlaceholder')}
                                     size="large"
                                     type="textarea"
                                     rows={3}

@@ -1,0 +1,575 @@
+// Мобильные стили для ProductionView
+
+@import './mixins';
+
+// Основной layout ProductionView
+.production-layout {
+  @include mobile {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 100vh !important;
+    scroll-snap-type: y mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+// Блоки продукции
+.production-block {
+  @include mobile {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    padding: 8px !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+  }
+}
+
+.production-flex {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    padding: 8px !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    width: var(--mobile-content-width, 400px) !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    margin: 0 auto !important;
+  }
+}
+
+// Карусель изображений - переопределяем инлайн-стили
+.carousel-container {
+  @include mobile {
+    order: 1 !important; // Изображение всегда сверху
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
+    flex-shrink: 1 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  // Стили для изображений внутри карусели
+  img {
+    @include mobile {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+  }
+}
+
+// NSpace с каруселью (используется в компоненте)
+.production-layout .production-block NSpace[data-image-container="true"],
+.production-layout .production-block NSpace.carousel-container {
+  @include mobile {
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
+    flex-shrink: 1 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  // Внутренний NSpace
+  > NSpace {
+    @include mobile {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+  
+  img {
+    @include mobile {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+  }
+}
+
+// Изображения в ProductionView
+.production-image-container {
+  @include mobile {
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+.production-image {
+  @include mobile {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+}
+
+// Текстовый контент
+.production-content {
+  @include mobile {
+    order: 2 !important; // Текст всегда снизу
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
+    text-align: center !important;
+    padding: 8px !important;
+    flex: 1 !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+}
+
+.production-text {
+  @include mobile {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0 !important;
+  }
+}
+
+.production-title {
+  @include mobile {
+    font-size: $mobile-font-size-xl !important;
+    margin-bottom: $mobile-gap-small !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  
+  @include mobile-small {
+    font-size: $mobile-font-size-large !important;
+  }
+}
+
+.production-description {
+  @include mobile {
+    font-size: $mobile-font-size-base !important;
+    line-height: 1.5 !important;
+    margin-bottom: $mobile-gap !important;
+    padding: 0 $mobile-padding-small !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  
+  @include mobile-small {
+    font-size: $mobile-font-size-small !important;
+  }
+}
+
+// Стили для текстовых блоков внутри NSpace
+.production-layout .production-block NSpace .production-text,
+.production-layout .production-block NSpace > div[style*="textAlign"] {
+  @include mobile {
+    width: 100% !important;
+    padding: $mobile-padding !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    // Заголовки
+    > div[style*="fontSize"] {
+      @include mobile {
+        font-size: $mobile-font-size-xl !important;
+        margin-bottom: $mobile-gap-small !important;
+      }
+      
+      @include mobile-small {
+        font-size: $mobile-font-size-large !important;
+      }
+    }
+    
+    // Описания
+    > p {
+      @include mobile {
+        font-size: $mobile-font-size-base !important;
+        margin-bottom: $mobile-gap !important;
+        padding: 0 $mobile-padding-small !important;
+      }
+      
+      @include mobile-small {
+        font-size: $mobile-font-size-small !important;
+      }
+    }
+  }
+}
+
+// Кнопки
+.contact-button {
+  @include mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: $mobile-padding !important;
+    font-size: $mobile-font-size-base !important;
+    margin: $mobile-gap-small auto !important;
+    min-height: 44px !important;
+  }
+  
+  @include mobile-small {
+    font-size: $mobile-font-size-small !important;
+    padding: $mobile-padding-small $mobile-padding !important;
+  }
+}
+
+// Кнопки внутри блоков (инлайн-стили)
+.production-layout .production-block .n-button {
+  @include mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: $mobile-padding !important;
+    font-size: $mobile-font-size-base !important;
+    margin: $mobile-gap-small auto !important;
+    min-height: 44px !important;
+  }
+  
+  @include mobile-small {
+    font-size: $mobile-font-size-small !important;
+    padding: $mobile-padding-small $mobile-padding !important;
+  }
+}
+
+// Карусель изображений
+.carousel-arrow {
+  @include mobile {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 18px !important;
+    
+    &.arrow-left {
+      left: 10px !important;
+    }
+    
+    &.arrow-right {
+      right: 10px !important;
+    }
+  }
+  
+  @include mobile-small {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 16px !important;
+  }
+}
+
+// Навигация - скрываем на мобильных для страницы продукции
+.production-layout .navigation-container {
+  @include mobile {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+.burger-button {
+  @include mobile {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 18px !important;
+    min-height: 44px !important;
+  }
+}
+
+.navigation-menu {
+  @include mobile {
+    min-width: 250px !important;
+    padding: 15px !important;
+    top: 55px !important;
+  }
+  
+  @include mobile-small {
+    min-width: 220px !important;
+    padding: 12px !important;
+    top: 50px !important;
+  }
+}
+
+.navigation-button {
+  @include mobile {
+    padding: 10px 14px !important;
+    font-size: 15px !important;
+    min-height: 44px !important;
+  }
+  
+  @include mobile-small {
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+  }
+}
+
+// Стили для всех NSpace элементов в блоках
+.production-layout .production-block NSpace {
+  @include mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+}
+
+// Переопределение инлайн-стилей для карусели через атрибут data-image-container
+.production-layout .production-block NSpace[data-image-container="true"] {
+  @include mobile {
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
+    flex-shrink: 1 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  // Внутренний NSpace
+  > NSpace {
+    @include mobile {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+  
+  img {
+    @include mobile {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+  }
+}
+
+// Переопределение инлайн-стилей для текстовых блоков
+.production-layout .production-block NSpace > div[style*="textAlign"] {
+  @include mobile {
+    width: 100% !important;
+    padding: $mobile-padding !important;
+    text-align: center !important;
+    
+    // Заголовки с инлайн-стилями
+    > div[style*="fontSize"] {
+      @include mobile {
+        font-size: $mobile-font-size-xl !important;
+        margin-bottom: $mobile-gap-small !important;
+      }
+      
+      @include mobile-small {
+        font-size: $mobile-font-size-large !important;
+      }
+    }
+    
+    // Описания с инлайн-стилями
+    > p[style*="fontSize"] {
+      @include mobile {
+        font-size: $mobile-font-size-base !important;
+        margin-bottom: $mobile-gap !important;
+        padding: 0 $mobile-padding-small !important;
+      }
+      
+      @include mobile-small {
+        font-size: $mobile-font-size-small !important;
+      }
+    }
+    
+    // Кнопки с инлайн-стилями
+    .n-button {
+      @include mobile {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: $mobile-padding !important;
+        font-size: $mobile-font-size-base !important;
+        margin: $mobile-gap-small auto !important;
+        min-height: 44px !important;
+      }
+      
+      @include mobile-small {
+        font-size: $mobile-font-size-small !important;
+        padding: $mobile-padding-small $mobile-padding !important;
+      }
+    }
+  }
+}
+
+// Переопределение инлайн-стилей для блоков с фиксированными размерами
+.production-layout .production-block NSpace[style*="600px"] {
+  @include mobile {
+    width: var(--mobile-content-width, 400px) !important;
+    max-width: var(--mobile-content-width, 400px) !important;
+    min-width: var(--mobile-content-width, 400px) !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 !important;
+    flex-shrink: 1 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+// Переопределение для всех блоков с фиксированной высотой
+.production-layout .production-block NSpace[style*="height: '100%'"] {
+  @include mobile {
+    height: auto !important;
+    min-height: auto !important;
+  }
+}
+
+// Дополнительные стили для улучшения мобильной версии
+.production-layout {
+  // Отключаем wheel-события на мобильных для обычного скролла
+  @include mobile {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// Улучшение отображения изображений на мобильных
+.production-layout img {
+  @include mobile {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+// Улучшение отступов для всех блоков
+.production-layout .production-block {
+  @include mobile {
+    padding-top: $mobile-padding-large !important;
+    padding-bottom: $mobile-padding-large !important;
+  }
+}
+
+// Улучшение для NFlex контейнеров
+.production-layout .production-flex {
+  @include mobile {
+    gap: $mobile-gap-large !important;
+  }
+}
+
+// Стили для улучшения читаемости текста
+.production-layout .production-text,
+.production-layout .production-content {
+  @include mobile {
+    padding-left: $mobile-padding !important;
+    padding-right: $mobile-padding !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
+
+// Стили для модального окна в ProductionView
+.production-layout .n-modal {
+  @include mobile {
+    .n-card {
+      width: 90% !important;
+      max-width: 90vw !important;
+      min-width: 280px !important;
+      margin: 20px auto !important;
+    }
+    
+    // Форма на мобильных
+    .n-form {
+      .n-form-item {
+        margin-bottom: 16px !important;
+      }
+    }
+    
+    // Flex контейнер для телефона
+    .n-form-item .n-flex {
+      flex-direction: column !important;
+      gap: 12px !important;
+      
+      .n-select {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-shrink: 1 !important;
+      }
+      
+      .n-input {
+        width: 100% !important;
+        flex: 1 1 auto !important;
+      }
+    }
+    
+    // Кнопки формы
+    .n-form > div:last-child {
+      .n-flex,
+      div[style*="display: flex"] {
+        flex-direction: column !important;
+        gap: 10px !important;
+        justify-content: stretch !important;
+        
+        .n-button {
+          width: 100% !important;
+          flex: 1 1 auto !important;
+        }
+      }
+    }
+  }
+  
+  @include mobile-small {
+    .n-card {
+      width: 95% !important;
+      max-width: 95vw !important;
+      min-width: 260px !important;
+      margin: 10px auto !important;
+    }
+  }
+}
+

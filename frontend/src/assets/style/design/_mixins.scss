@@ -1,0 +1,254 @@
+// Система дизайна - Миксины
+
+@import './variables';
+
+// Градиентный текст
+@mixin gradient-text($gradient: $gradient-primary) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Стеклянный эффект (glassmorphism)
+@mixin glass-effect($opacity: 0.1, $blur: $blur-md) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: $blur;
+  -webkit-backdrop-filter: $blur;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Тень с свечением
+@mixin glow-shadow($color: $color-primary, $size: 20px, $opacity: 0.3) {
+  box-shadow: 0 0 $size rgba($color, $opacity);
+}
+
+// Плавный hover эффект
+@mixin hover-lift {
+  transition: transform $transition-base, box-shadow $transition-base;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Кнопка с градиентом
+@mixin gradient-button($gradient: $gradient-primary) {
+  background: $gradient;
+  border: none;
+  color: $text-primary;
+  font-weight: $font-weight-semibold;
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left $transition-slow;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-glow;
+    
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Карточка с эффектом
+@mixin card-effect {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    border-color: $color-primary;
+    transform: translateY(-4px);
+  }
+}
+
+// Анимация появления
+@mixin fade-in($duration: $transition-base) {
+  animation: fadeIn $duration $ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Анимация масштабирования
+@mixin scale-in($duration: $transition-base) {
+  animation: scaleIn $duration $ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Пульсация
+@mixin pulse($color: $color-primary) {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba($color-primary, 0.7);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 10px rgba($color-primary, 0);
+  }
+}
+
+// Скольжение
+@mixin slide-in($direction: 'left', $distance: 20px) {
+  @if $direction == 'left' {
+    animation: slideInLeft $transition-base $ease-out;
+  } @else if $direction == 'right' {
+    animation: slideInRight $transition-base $ease-out;
+  } @else if $direction == 'up' {
+    animation: slideInUp $transition-base $ease-out;
+  } @else if $direction == 'down' {
+    animation: slideInDown $transition-base $ease-out;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Скроллбар стилизация
+@mixin custom-scrollbar($width: 8px, $thumb-color: $color-primary, $track-color: $bg-tertiary) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $border-radius-sm;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $border-radius-sm;
+    
+    &:hover {
+      background: $color-primary-dark;
+    }
+  }
+}
+
+// Текст с обрезкой
+@mixin text-truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Центрирование
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Flex центрирование
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Адаптивный контейнер
+@mixin container($max-width: 1400px, $padding: $spacing-lg) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $padding;
+  box-sizing: border-box;
+}
+

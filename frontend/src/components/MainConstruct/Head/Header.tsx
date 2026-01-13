@@ -23,7 +23,7 @@ export default defineComponent({
     render() {
 
         return (
-            <NLayoutHeader position={'static'} style={'position: '}>
+            <NLayoutHeader position={'absolute'} style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000}}>
 
                     <NGrid cols={'1'}>
                         <NGridItem><UpHead routeName={this.currentRoute?.name || 'Main'}></UpHead></NGridItem>

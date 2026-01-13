@@ -1,0 +1,246 @@
+// Мобильные стили для главной страницы
+
+@import './mixins';
+
+// Контейнер главной страницы - разрешаем скролл на мобильных
+.main-page-container {
+  @include mobile {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+// Главная страница - разрешаем скролл на мобильных
+.main-page {
+  @include mobile {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+// Заголовок главной страницы
+.main-header {
+  @include mobile {
+    padding: $mobile-padding !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+}
+
+.main-header-content {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: $mobile-gap !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.main-logo {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: $mobile-gap-small !important;
+    text-align: center !important;
+  }
+}
+
+.contact-info {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: $mobile-gap !important;
+    width: 100% !important;
+  }
+  
+  .contact-item {
+    @include mobile {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
+  }
+}
+
+// Секция услуг - адаптация для мобильных
+.services-section {
+  @include mobile {
+    padding: $mobile-padding-large !important;
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+}
+
+.services-grid {
+  @include mobile {
+    grid-template-columns: 1fr !important;
+    gap: $mobile-gap !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+}
+
+.service-card {
+  @include mobile {
+    padding: $mobile-padding-large !important;
+    width: 100% !important;
+  }
+}
+
+// Главный блок с фоном - изображение сверху, текст снизу на мобильных
+.main-hero {
+  @include mobile {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  .hero-background {
+    @include mobile {
+      position: relative !important;
+      order: 1 !important;
+      height: 40vh !important;
+      min-height: 300px !important;
+      max-height: 400px !important;
+      width: 100% !important;
+      filter: brightness(0.6) contrast(1.1) !important;
+      flex-shrink: 0 !important;
+    }
+    
+    @include mobile-small {
+      min-height: 250px !important;
+      max-height: 300px !important;
+    }
+  }
+  
+  .hero-content {
+    @include mobile {
+      position: relative !important;
+      order: 2 !important;
+      z-index: 1 !important;
+      padding: $mobile-padding-large !important;
+      background: rgba(26, 26, 26, 0.98) !important;
+      width: 100% !important;
+      height: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+    
+    .hero-title {
+      @include mobile {
+        font-size: $mobile-font-size-xxl !important;
+        margin-bottom: $mobile-gap-small !important;
+        line-height: 1.3 !important;
+      }
+      
+      @include mobile-small {
+        font-size: $mobile-font-size-xl !important;
+      }
+    }
+    
+    .hero-subtitle {
+      @include mobile {
+        font-size: $mobile-font-size-base !important;
+        line-height: 1.5 !important;
+        max-width: 100% !important;
+      }
+    }
+  }
+}
+
+// Главный блок
+.main_background_block {
+  @include mobile {
+    height: auto !important;
+    min-height: 50vh;
+    background-position: center center !important;
+    background-size: cover !important;
+    padding: $mobile-padding !important;
+  }
+}
+
+.main_block {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: $mobile-gap !important;
+    padding: $mobile-padding !important;
+  }
+}
+
+.inner_block {
+  @include mobile {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: $mobile-gap !important;
+    text-align: center !important;
+  }
+}
+
+.name_inner_block {
+  @include mobile {
+    font-size: $mobile-font-size-xxl !important;
+    text-align: center !important;
+  }
+  
+  @include mobile-small {
+    font-size: $mobile-font-size-xl !important;
+  }
+}
+
+// Иконки
+.main-icon {
+  @include mobile {
+    width: 200px !important;
+    height: auto !important;
+    max-width: 100% !important;
+  }
+  
+  @include mobile-small {
+    width: 150px !important;
+  }
+}
+
+// Социальные иконки
+.social-icons {
+  @include mobile {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: $mobile-gap-small !important;
+  }
+}
+
+.social-icon {
+  @include mobile {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+

@@ -173,6 +173,35 @@
 
 Отредактируйте секцию `script:` в job'е `deploy` или соответствующих job'ах в GitLab CI.
 
+## Self-Hosted Runner для GitHub Actions
+
+Если вы хотите использовать свой собственный сервер для выполнения пайплайнов:
+
+### Документация
+
+- **[docs/SERVER_SETUP_RUNNER.md](docs/SERVER_SETUP_RUNNER.md)** - Полная инструкция по установке на сервере
+- **[docs/GITHUB_RUNNER_SETUP.md](docs/GITHUB_RUNNER_SETUP.md)** - Общее руководство по runner'ам
+- **[docs/EDIT_RUNNER.md](docs/EDIT_RUNNER.md)** - Редактирование настроек runner'а
+
+### Быстрая установка
+
+**На Linux сервере:**
+```bash
+# Используйте готовый скрипт
+sudo bash scripts/setup-runner-server.sh
+
+# Или с параметрами
+sudo bash scripts/setup-runner-server.sh \
+  https://github.com/gidrus52/mr_freazer \
+  production-server \
+  self-hosted,linux,production
+```
+
+**На Windows:**
+```powershell
+.\scripts\install-github-runner.ps1 -RepoUrl "https://github.com/username/repo" -Token "YOUR_TOKEN" -RunnerName "production-server"
+```
+
 ## Мониторинг
 
 - **GitHub Actions**: Проверяйте статус в разделе "Actions" репозитория

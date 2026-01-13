@@ -14,6 +14,31 @@ export default defineConfig({
       // options are passed on to @vue/babel-plugin-jsx
     }),
   ],
+  // Определение feature flags для Vue
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+  },
+  // Настройка для статических файлов
+  publicDir: 'public',
+  build: {
+    // Настройки для сборки
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        // Сохраняем структуру для изображений
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name?.split('.') || []
+          const ext = info[info.length - 1]
+          // Если это изображение из assets/img, сохраняем путь
+          if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'ico'].includes(ext)) {
+            // Сохраняем оригинальное имя и путь
+            return 'assets/img/[name][extname]'
+          }
+          return 'assets/[name]-[hash][extname]'
+        }
+      }
+    }
+  },
   server: {
     proxy: {
       '/api': {
