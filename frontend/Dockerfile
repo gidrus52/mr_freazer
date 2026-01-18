@@ -24,6 +24,8 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY steelshift.tech.crt /etc/nginx/ssl/
+COPY steelshift.tech.key /etc/nginx/ssl/
 
 # Expose port 80
 EXPOSE 80
